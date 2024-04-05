@@ -1,0 +1,35 @@
+.dealCard {
+    /* Set border properties */
+    border: 2px solid;
+    
+    /* Apply linear gradient to the border */
+    border-image: linear-gradient(249.79deg, #999999 4.34%, #E6E6E6 48.97%, #FFFFFF 97.02%);
+    border-image-slice: 1 ; 
+   
+    
+}
+
+
+/* .dealCard:hover {
+    background: #D9D9D9;
+    opacity: 0.2;
+    border: 2px solid;
+    border-image-source: linear-gradient(249.79deg, #FFFFFF 4.34%, #E6E6E6 52.4%, #999999 97.02%);
+    animation-name: hoverAnimation;
+    animation-duration: 0.5s;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+} */
+
+/* @keyframes hoverAnimation {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+} */

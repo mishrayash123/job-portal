@@ -1,0 +1,9 @@
+.overlay {
+  background-color: rgba(59, 59, 64, 0.3); /* Adjust values for #3D3B40 with opacity 0.3 */
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}

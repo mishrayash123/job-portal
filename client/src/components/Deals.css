@@ -1,0 +1,25 @@
+.deals-container {
+    position: relative; /* Ensure proper positioning of pseudo-element */
+    height: 508px;
+    overflow: hidden; /* Hide overflow content from pseudo-element */
+}
+
+.deals-container::before {
+    content: ''; /* Required for pseudo-elements */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Place behind other content */
+    background-image: url('../assets/employees.jpg');
+    background-repeat: no-repeat;
+    background-size: cover; /* Adjust as needed */
+    opacity: 0.8;
+}
+
+.deals-container > .content {
+    position: relative; /* Ensure content is stacked on top of pseudo-element */
+    z-index: 1; /* Ensure content appears above pseudo-element */
+    background-color: #3D3B40;
+}
