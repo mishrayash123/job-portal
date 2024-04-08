@@ -12,7 +12,6 @@ import AttachedLink from '../assets/attached_link.png'
 import Undo from '../assets/undo.png'
 import Redo from '../assets/redo.png'
 import { Link } from 'react-router-dom'
-import ArrowRightWhite from '../assets/arrow-right-white.png'
 import Footer from './Footer'
 
 const CreateAccount = () => {

@@ -8,7 +8,7 @@ import ProfileModal from './ProfileModal';
 
 const Navbar = () => {
 
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const [isLoggedIn ] = useState(true);
 
     const location = useLocation();
     const [activeNavLink, setActiveNavLink] = useState(null);

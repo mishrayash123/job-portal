@@ -4,7 +4,6 @@ import Navbar from './Navbar'
 import Footer from './Footer'
 import './AccountInfo.css'
 import NotificationBell from '../assets/notification_bell.png'
-import Edit from '../assets/edit.png'
 
 
 export const AccountInfo = () => {
