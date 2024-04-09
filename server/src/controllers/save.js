@@ -1,20 +1,17 @@
 import express from 'express';
 
-import { createCart ,getcart,deleteCartById} from '../db/Cart.js';
+import { createsavejob ,getsavejob,deletesavejobById} from '../db/saved.js';
 
-export const addtocart = async (req, res) => {
+export const addtosave = async (req, res) => {
     try {
-      const { productid, userid,image,title,price } = req.body;
-      if (!productid || !userid) {
+      const { jobid, userid } = req.body;
+      if (!jobid || !userid) {
         return res.sendStatus(400);
       }
 
-      const user  = await createCart({
-        productid,
+      const user  = await createsavejob({
+        jobid,
         userid,
-        image,
-        title,
-        price
       });
       return res.status(200).json(user).end();
     } catch (error) {
@@ -23,9 +20,9 @@ export const addtocart = async (req, res) => {
     }
   }
 
-  export  const getCart = async (req, res) => {
+  export  const getsave = async (req, res) => {
     try {
-      const users  = await getcart();
+      const users  = await getsavejob();
   
       return res.status(200).json(users);
     } catch (error) {
@@ -34,11 +31,11 @@ export const addtocart = async (req, res) => {
     }
   };
 
-  export  const deleteCart = async (req, res) => {
+  export  const deletesave = async (req, res) => {
     try {
       const { id } = req.params;
   
-      const deletedUser = await deleteCartById(id);
+      const deletedUser = await deletesavejobById(id);
   
       return res.json(deletedUser);
     } catch (error) {
