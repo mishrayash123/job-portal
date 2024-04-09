@@ -1,5 +1,5 @@
 import React from 'react'
-import Errow from '../assets/errow.png'
+import Errow from '../assets/Vector.png'
 import Location from '../assets/location.png'
 import Mail from '../assets/mail.png'
 import Phone from '../assets/phone.png'
@@ -26,9 +26,9 @@ const Footer = () => {
                     <div className='flex flex-col'>
                         <p className='h-[38px] font-SofiaSans font-bold text-[32px] leading-[38.4px] uppercase text-[#ffffff]'>For Employers</p>
                         <div className='w-[59px] flex justify-between'>
-                            <div className='w-[39px] border-[3px] border-[#FF8A8A]'></div>
-                            <div className='w-[12px] border-[3px] border-[#FF8A8A]'></div>
-                            <div className='w-[4px] border-[3px] border-[#FF8A8A]'></div>
+                            <div className='w-[39px] border-[3px] border-[#6369e1]'></div>
+                            <div className='w-[12px] border-[3px] border-[#8a8cff]'></div>
+                            <div className='w-[4px] border-[3px] border-[#8e8aff]'></div>
                         </div>
                     </div>
                     <div className='flex flex-col gap-y-4 '>
@@ -47,9 +47,9 @@ const Footer = () => {
                     <div className='flex flex-col'>
                         <p className='h-[38px] font-SofiaSans font-bold text-[32px] leading-[38.4px] uppercase text-[#ffffff]'>For Candidates</p>
                         <div className='w-[59px] flex justify-between'>
-                            <div className='w-[39px] border-[3px] border-[#FF8A8A]'></div>
-                            <div className='w-[12px] border-[3px] border-[#FF8A8A]'></div>
-                            <div className='w-[4px] border-[3px] border-[#FF8A8A]'></div>
+                        <div className='w-[39px] border-[3px] border-[#6369e1]'></div>
+                            <div className='w-[12px] border-[3px] border-[#8a8cff]'></div>
+                            <div className='w-[4px] border-[3px] border-[#8e8aff]'></div>
                         </div>
                     </div>
                     <div className='flex flex-col gap-y-4'>
@@ -68,9 +68,9 @@ const Footer = () => {
                     <div className='flex flex-col'>
                         <p className='h-[38px] font-SofiaSans font-bold text-[32px] leading-[38.4px] uppercase text-[#ffffff]'>Contact Us</p>
                         <div className='w-[59px] flex justify-between'>
-                            <div className='w-[39px] border-[3px] border-[#FF8A8A]'></div>
-                            <div className='w-[12px] border-[3px] border-[#FF8A8A]'></div>
-                            <div className='w-[4px] border-[3px] border-[#FF8A8A]'></div>
+                        <div className='w-[39px] border-[3px] border-[#6369e1]'></div>
+                            <div className='w-[12px] border-[3px] border-[#8a8cff]'></div>
+                            <div className='w-[4px] border-[3px] border-[#8e8aff]'></div>
                         </div>
                     </div>
                     <div className='flex flex-col gap-y-4'>

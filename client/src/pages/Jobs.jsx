@@ -4,7 +4,6 @@ import Navbar from '../components/Navbar'
 import BrowseJobs from '../components/BrowseJobs'
 import './Jobs.css'
 import { jobOftheDayData } from '../data/jobOfTheDay'
-import JobCard from '../components/JobCard'
 import JobsOtdCards from '../components/JobsOtdCards'
 import Footer from '../components/Footer'
 

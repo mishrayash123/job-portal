@@ -17,7 +17,6 @@ const HeroSection = () => {
                 />
 
             </div>
-
             <div className='w-[674px] h-[136px] absolute top-[487px] left-[138px] text-[#ffffff] z-10'>
                 <p className='font-Roboto font-[400] text-[58px] leading-[67.97px]'>
                     We offer <span> </span>
