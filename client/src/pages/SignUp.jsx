@@ -3,7 +3,7 @@ import SignUpLogo from '../assets/SignUpPage SVG.svg'
 import './Login.css'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
-import UserService from '../services/UserService';
+import axios from 'axios';
 const SignUp = () => {
     const [formData, setFormData] = useState({
         fullname: '',
@@ -25,7 +25,7 @@ const SignUp = () => {
       const handleSubmit = async (e) => {
         e.preventDefault();
     
-        const { data } = await fetch('http://localhost:3000/auth/register', {
+        const { data } = await axios.fetch('http://localhost:8080/auth/registration', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData),
@@ -108,11 +108,7 @@ const SignUp = () => {
                             type="radio"
               name="accountType"
               id="accountType"
-              value={Conditions}
-              onChange={handleChange}
-              required
-
-                                />
+              value={Conditions}/>
                             <label htmlFor="accountType">Candidate</label>
                         </div>
                         <div className='flex gap-x-1'>
@@ -121,8 +117,7 @@ const SignUp = () => {
               name="Type"
               id="Type"
               value={Type}
-              onChange={handleChange}
-              required />
+              />
                             <label htmlFor="accountType">Recruiter</label>
                         </div>
 

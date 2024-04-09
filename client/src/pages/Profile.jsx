@@ -6,7 +6,7 @@ import MailBlue from '../assets/mail-blue.png'
 import PhoneBlue from '../assets/phone_blue.png'
 import LocationBlue from '../assets/location_blue.png'
 import { Link } from 'react-router-dom'
-
+import axios from 'axios';
 const Profile = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
@@ -19,6 +19,30 @@ const Profile = () => {
   const openFilePicker = () => {
     fileInputRef.current.click();
   };
+
+  const handleUpdateProfile = async () => {
+    // Prepare the updated user data
+    const updatedUserData = {
+      // Include the fields you want to update here
+      // For example:
+      // name: 'New Name',
+      // email: 'new.email@example.com',
+      // ...
+    };
+
+    try {
+      // Send a PUT request to the backend API to update the user
+      const response = await axios.put('http://localhost:8080/Employer', updatedUserData);
+
+      if (response.status === 200) {
+        // Handle successful update
+        console.log('User updated successfully');
+      }
+    } catch (error) {
+      console.error('Error updating user:', error);
+    }
+  };
+  
   return (
     <div className='flex flex-col w-full '>
       <Navbar />
@@ -51,7 +75,7 @@ const Profile = () => {
 
 
             <Link to='/edit-profile' className='font-Roboto font-semibold text-[14px] leading-[16.41px] text-[#0070D7]'>
-              <button className='px-[34px] py-[9px] w-fit rounded-md border-[1px] border-[#0070D7]'>
+              <button  onClick={handleUpdateProfile} className='px-[34px] py-[9px] w-fit rounded-md border-[1px] border-[#0070D7]'>
                 Edit
               </button>
             </Link>

@@ -35,7 +35,7 @@ const Login = () => {
     };
   
     try {
-      const response = await axios.post('/auth/login', user);
+      const response = await axios.post('http://localhost:8080/auth/login', user);
   
       if (response.data.user) {
         history('/');
