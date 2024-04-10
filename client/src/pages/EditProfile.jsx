@@ -5,42 +5,41 @@ import { Link, useNavigate } from 'react-router-dom'
 import Flag from '../assets/flag-india.png'
 import ArrowRight from '../assets/arrow-right.png'
 import EmailChangePopup from '../components/EmailChangePopup'
-import axios from 'axios';
 
 const EditProfile = () => {
-    const [popupVisible, setPopUpVisible] = useState(false);
-    const handlePopup = () => setPopUpVisible(true);
-     const navigate = useNavigate();
+//     const [popupVisible, setPopUpVisible] = useState(false);
+//     const handlePopup = () => setPopUpVisible(true);
+//      const navigate = useNavigate();
 
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
-  const [city, setCity] = useState('');
-  const [pincode, setPincode] = useState('');
+//   const [firstName, setFirstName] = useState('');
+//   const [lastName, setLastName] = useState('');
+//   const [phone, setPhone] = useState('');
+//   const [address, setAddress] = useState('');
+//   const [city, setCity] = useState('');
+//   const [pincode, setPincode] = useState('');
 
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
+//   const handleFormSubmit = async (e) => {
+//     e.preventDefault();
 
-    try {
-      const response = await axios.put('http://localhost:8080/auth/Employer', {
-        firstName,
-        lastName,
-        phone,
-        address,
-        city,
-        pincode,
-      });
+//     try {
+//       const response = await axios.put('http://localhost:8080/auth/Employer', {
+//         firstName,
+//         lastName,
+//         phone,
+//         address,
+//         city,
+//         pincode,
+//       });
 
-      if (response.status === 200) {
-        // Handle successful update
-        console.log('Employer updated successfully');
-        navigate('/profile');
-      }
-    } catch (error) {
-      console.error('Error updating employer:', error);
-    }
-  }
+//       if (response.status === 200) {
+//         // Handle successful update
+//         console.log('Employer updated successfully');
+//         navigate('/profile');
+//       }
+//     } catch (error) {
+//       console.error('Error updating employer:', error);
+//     }
+//   }
 
     return (
              <div>
@@ -66,8 +65,8 @@ const EditProfile = () => {
                                     type="text"
                                     name='firstName'
                                     placeholder='Zeena'
-                                    value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
+        //                             value={firstName}
+        //   onChange={(e) => setFirstName(e.target.value)}
                                 />
 
                             </div>
@@ -81,8 +80,8 @@ const EditProfile = () => {
                                     type="text"
                                     name='lastName'
                                     placeholder='Jalil'
-                                    value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
+        //                             value={lastName}
+        //   onChange={(e) => setLastName(e.target.value)}
                                 />
 
                             </div>
@@ -106,8 +105,8 @@ const EditProfile = () => {
                                         type="text"
                                         name='phone'
                                         placeholder='1297498349'
-                                        value={phone}
-          onChange={(e) => setPhone(e.target.value)}
+        //                                 value={phone}
+        //   onChange={(e) => setPhone(e.target.value)}
                                     />
                                 </div>
 
@@ -118,7 +117,9 @@ const EditProfile = () => {
                                 <p className='font-Roboto font-bold text-[16px] leading-[18.75px] text-[#000000]'>Email</p>
                                 <div className='flex justify-between items-baseline'>
                                     <p className='font-Roboto font-light text-[16px] leading-[18.75px] text-[#000000]'>zeenajalil@gmail.com</p>
-                                    <div className='flex items-baseline gap-x-2 w-fit' onClick={handlePopup}>
+                                    <div className='flex items-baseline gap-x-2 w-fit' 
+                                    // onClick={handlePopup}
+                                    >
                                         <p className='uppercase font-Roboto font-medium text-[18px] leading-[21.09px] text-[#3941FF]'>EDIT</p>
                                         <img src={ArrowRight} alt="" />
                                     </div>
@@ -149,9 +150,9 @@ const EditProfile = () => {
 
                                 <input className='w-full rounded-lg px-3 py-3 border-[1.5px] border-[#A6A6A6] font-Roboto font-light text-[17px] leading-[19.92px] text-[#000000] outline-[#A6A6A6]'
                                     type="text"
-                                    name='address'
-                                     value={address}
-          onChange={(e) => setAddress(e.target.value)}
+        //                             name='address'
+        //                              value={address}
+        //   onChange={(e) => setAddress(e.target.value)}
 
                                 />
 
@@ -164,9 +165,10 @@ const EditProfile = () => {
 
                                 <input className='w-full rounded-lg px-3 py-3 border-[1.5px] border-[#A6A6A6] font-Roboto font-light text-[17px] leading-[19.92px] text-[#000000] outline-[#A6A6A6]'
                                     type="text"
-                                    name='state'
-                                    value={city}
-                                    onChange={(e) => setCity(e.target.value)}     />
+                                    // name='state'
+                                    // value={city}
+                                    // onChange={(e) => setCity(e.target.value)}  
+                                       />
 
                             </div>
 
@@ -177,16 +179,19 @@ const EditProfile = () => {
 
                                 <input className='w-full rounded-lg px-3 py-3 border-[1.5px] border-[#A6A6A6] font-Roboto font-light text-[17px] leading-[19.92px] text-[#000000] outline-[#A6A6A6]'
                                     type="text"
-                                    name='pincode'
-                                    value={pincode}
-          onChange={(e) => setPincode(e.target.value)} />
+        //                             name='pincode'
+        //                             value={pincode}
+        //   onChange={(e) => setPincode(e.target.value)}
+           />
 
                             </div>
 
 
                             <div className='flex gap-x-6 pt-5'>
                                 <Link to='/profile' className='w-fit'>
-                                    <button onSubmit={handleFormSubmit} type='submit' className='bg-[#525CEB] px-[34px] py-[14px] w-fit rounded-md'>
+                                    <button
+                                    //  onSubmit={handleFormSubmit}
+                                     type='submit' className='bg-[#525CEB] px-[34px] py-[14px] w-fit rounded-md'>
                                         <p className='font-Roboto font-bold text-[18px] leading-[21.09px] text-[#ffffff]'>Save</p>
                                     </button>
                                 </Link>
@@ -205,11 +210,11 @@ const EditProfile = () => {
                 </div>
 
             </div>
-
+{/* 
             {
                 popupVisible && 
                 <EmailChangePopup setPopUpVisible={setPopUpVisible}/>
-            }
+            } */}
         </div>
 
     );

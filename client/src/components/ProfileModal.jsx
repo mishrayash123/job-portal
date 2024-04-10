@@ -4,8 +4,10 @@ import Saved from '../assets/saved.png'
 import Help from '../assets/help.png'
 import './ProfileModal.css'
 import { Link } from 'react-router-dom'
+import { useAuth } from "../AuthContext";
 
 const ProfileModal = () => {
+    const { logout} = useAuth();
   return (
     <div className='flex flex-col w-[343px] h-[280px] rounded-lg bg-[#FFFFFF] profileCard'>
         <div className='w-full h-[calc(280px-39px)] px-6 py-7 flex flex-col gap-y-4'>
@@ -38,7 +40,7 @@ const ProfileModal = () => {
         </div>
 
         <div className='w-full h-[39px] flex justify-center items-center border-t-[1px] border-[#BBBBBB]'>
-            <p className='font-Roboto font-medium text-[16px] leading-[18.75px] text-[#0F7DFF]'>Sign out</p>
+            <p className='font-Roboto font-medium text-[16px] leading-[18.75px] text-[#0F7DFF] cursor-pointer' onClick={logout}>Sign out</p>
         </div>
     </div>
   )

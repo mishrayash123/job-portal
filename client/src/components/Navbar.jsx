@@ -5,10 +5,10 @@ import { BsFillBellFill } from "react-icons/bs";
 import User from '../assets/User.png'
 import './Navbar.css'
 import ProfileModal from './ProfileModal';
+import { useAuth } from "../AuthContext";
 
 const Navbar = () => {
-
-    const [isLoggedIn ] = useState(true);
+    const { isLoggedIn} = useAuth();
 
     const location = useLocation();
     const [activeNavLink, setActiveNavLink] = useState(null);
@@ -86,7 +86,7 @@ const Navbar = () => {
                         (
                             <>
                                 <button className='h-[41px] w-[107px] rounded-md bg-darkBlue px-[28px] py-[10px] '>
-                                    <Link to='/signup'>
+                                    <Link to='/login'>
                                         <p className='text-[#ffffff] leading-[21.09px] font-bold font-Roboto text-[18px]'>Login</p>
                                     </Link>
                                 </button>

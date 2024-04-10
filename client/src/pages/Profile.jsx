@@ -6,42 +6,41 @@ import MailBlue from '../assets/mail-blue.png'
 import PhoneBlue from '../assets/phone_blue.png'
 import LocationBlue from '../assets/location_blue.png'
 import { Link } from 'react-router-dom'
-import axios from 'axios';
 const Profile = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
-  const fileInputRef = useRef(null);
+  // const [selectedFile, setSelectedFile] = useState(null);
+  // const fileInputRef = useRef(null);
 
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
-    // You can perform any additional actions upon file selection here
-  };
+  // const handleFileChange = (event) => {
+  //   setSelectedFile(event.target.files[0]);
+  //   // You can perform any additional actions upon file selection here
+  // };
 
-  const openFilePicker = () => {
-    fileInputRef.current.click();
-  };
+  // const openFilePicker = () => {
+  //   fileInputRef.current.click();
+  // };
 
-  const handleUpdateProfile = async () => {
-    // Prepare the updated user data
-    const updatedUserData = {
-      // Include the fields you want to update here
-      // For example:
-      // name: 'New Name',
-      // email: 'new.email@example.com',
-      // ...
-    };
+  // const handleUpdateProfile = async () => {
+  //   // Prepare the updated user data
+  //   const updatedUserData = {
+  //     // Include the fields you want to update here
+  //     // For example:
+  //     // name: 'New Name',
+  //     // email: 'new.email@example.com',
+  //     // ...
+  //   };
 
-    try {
-      // Send a PUT request to the backend API to update the user
-      const response = await axios.put('http://localhost:8080/Employer', updatedUserData);
+  //   try {
+  //     // Send a PUT request to the backend API to update the user
+  //     const response = await axios.put('http://localhost:8080/Employer', updatedUserData);
 
-      if (response.status === 200) {
-        // Handle successful update
-        console.log('User updated successfully');
-      }
-    } catch (error) {
-      console.error('Error updating user:', error);
-    }
-  };
+  //     if (response.status === 200) {
+  //       // Handle successful update
+  //       console.log('User updated successfully');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error updating user:', error);
+  //   }
+  // };
   
   return (
     <div className='flex flex-col w-full '>
@@ -75,7 +74,9 @@ const Profile = () => {
 
 
             <Link to='/edit-profile' className='font-Roboto font-semibold text-[14px] leading-[16.41px] text-[#0070D7]'>
-              <button  onClick={handleUpdateProfile} className='px-[34px] py-[9px] w-fit rounded-md border-[1px] border-[#0070D7]'>
+              <button  
+              // onClick={handleUpdateProfile}
+               className='px-[34px] py-[9px] w-fit rounded-md border-[1px] border-[#0070D7]'>
                 Edit
               </button>
             </Link>
@@ -87,22 +88,23 @@ const Profile = () => {
         <p className='font-Roboto font-semibold text-[24px] leading-[28.13px] text-[#343434] pb-5'>Resume</p>
 
         <input
-          ref={fileInputRef}
+          // ref={fileInputRef}
           type="file"
           style={{ display: 'none' }}
-          onChange={handleFileChange}
+          // onChange={handleFileChange}
           accept=".pdf,.doc,.docx" // Add acceptable file types here
         />
         <button
           className='w-full  py-[15px] border-[1px] border-[#BEBEBE] rounded-md text-[#0070D7] font-Roboto font-semibold text-[14px] leading-[16.41px]'
           type="button"
-          onClick={openFilePicker}
+          // onClick={openFilePicker}
         >
           <p >Upload Resume</p>
         </button>
-        {selectedFile && (
-          <p>Selected file: {selectedFile.name}</p>
-        )}
+        {/* {selectedFile && (
+          <p>Selected file: 
+            {selectedFile.name}</p>
+        )} */}
 
 
         <p className='font-Roboto font-normal text-[13px] leading-[15.23px] text-[#636363] pt-3'>

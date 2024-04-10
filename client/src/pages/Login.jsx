@@ -4,48 +4,50 @@ import { Link } from 'react-router-dom';
 import LoginImage from '../assets/Login Page SVG.svg'
 import GoogleLogo from '../assets/google.svg'
 import AppleLogo from '../assets/apple.svg'
-import axios from 'axios';
+import { useAuth } from "../AuthContext";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showClearIcon, setShowClearIcon] = useState(false);
-  const history = useNavigate();
+  const [showClearIcon, setShowClearIcon] = useState(false); 
+  const {login, setUser } = useAuth();
+  const [email, setEmail] = useState(""); // data is tarah lo  aur name wahi rakhna hai jo backend main hai
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleInputChange = (e) => {
-    if (e.target.value) {
-      setShowClearIcon(true);
-    } else {
-      setShowClearIcon(false);
-    }
-
-    if (e.target.name === 'email') {
-      setEmail(e.target.value);
-    } else if (e.target.name === 'password') {
-      setPassword(e.target.value);
-    }
-  };
-
-  const handleSubmit = async (e) => {
+  const handleLogin = async(e) => {
     e.preventDefault();
-  
-    const user = {
-      email: e.target.email.value,
-      password: e.target.password.value,
-    };
-  
     try {
-      const response = await axios.post('http://localhost:8080/auth/login', user);
-  
-      if (response.data.user) {
-        history('/');
-      } else {
-        alert('Wrong user name');
+      const response = await fetch( // fetch use karna axios nii
+        "http://localhost:8080/auth/login", // link of api or rout
+        {
+          method: "POST", // method 
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }), // please data send like this  most sensative  
+        }                                               // agr image hai data main to uska url bheja jaat hai mongodb image store nii karta pahle cloudnary ya firebase main
+                                                        // image store karwakr link generate karna hota hai fir link as a string bheja jaata hai
+      );
+
+      if (response.ok) { // agar response ok hai to
+        const data = await response.json();
+        const { username, email } = data;
+        setUser({ username, email });
+        login();
+        localStorage.setItem("jobportaltoken", data.sessionToken);
+        localStorage.setItem("jobportaluserId", data._id);
+        alert("Logged in successfully");
+        navigate("/");
+      } else { // agar response ok nii hai to
+        alert("something went wrong...please check credential");
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error during login:", error);
     }
   };
+
+
+
+  
 
   return (
     <div className='flex flex-col justify-center items-center h-screen bg-[#F3F4F6]'>
@@ -54,20 +56,23 @@ const Login = () => {
           <h1 className='font-bold text-[24px] leading-[30px]'>Welcome Back</h1>
           <p className='font-medium text-[16px] leading-[20px]'>Please sign in to continue</p>
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleLogin}>
             <input
               className='border-[1px] border-[#B5B5B5] p-[15px] rounded-[20px] w-full mt-[30px]'
-              type="email" name="email" onChange={handleInputChange} placeholder="Email" value={email} required />
+              type="email" name="email"  placeholder="Email"  required  onChange={(e) => setEmail(e.target.value)}/>
             
             {showClearIcon && (
             <input
               className='border-[1px] border-[#B5B5B5] p-[15px] rounded-[20px] w-full mt-[20px]'
-              type="password" name="password" onChange={handleInputChange} placeholder="Password" value={password} required />
+              type="password" name="password"  placeholder="Password"
+                required onChange={(e) => setPassword(e.target.value)} />
             
             )}  
                 
     
-            <button className='px-[153px] py-[14px] w-fit rounded-2xl bg-[#33B249] mt-[30px]' type="submit">
+            <button className='px-[153px] py-[14px] w-fit rounded-2xl bg-[#33B249] mt-[30px]' type="submit" onClick={()=>{
+              setShowClearIcon(true)
+            }}>
               <p className='font-Inter font-semibold text-[14px] leading-[16.94px] text-[#ffffff]'>
                 Continue
               </p>

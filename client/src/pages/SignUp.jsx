@@ -3,40 +3,37 @@ import SignUpLogo from '../assets/SignUpPage SVG.svg'
 import './Login.css'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 const SignUp = () => {
-    const [formData, setFormData] = useState({
-        fullname: '',
-        username: '',
-        email: '',
-        password: '',
-        Conditions: '',
-        Type: '',
-      });
+    const [username, setusername] = useState(""); 
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [Conditions,setConditions] = useState(true);
+    const [Type,setType] = useState("");
+    const [fullname,setfullname] = useState("");
+    const navigate = useNavigate();
     
-      const history = useNavigate();
-    
-      const { fullname, username, email, password, Conditions, Type } = formData;
-    
-      const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-      };
-    
-      const handleSubmit = async (e) => {
+    const handleRegister = async(e) => {
         e.preventDefault();
     
-        const { data } = await axios.fetch('http://localhost:8080/auth/registration', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData),
-        }).then((res) => res.json());
+        try {
+          const response = await fetch("http://localhost:8080/auth/register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({email, password, username,Conditions ,Type,fullname}),
+          });
     
-        if (data.sessionToken) {
-          localStorage.setItem('sessionToken', data.sessionToken);
-          history('/dashboard');
+          if (response.ok) {
+            alert("Registered successfully and now you can login your id");
+            navigate("/login");
+          }else {
+            alert("something went wrong...please check credential");
+          }
+        } catch (error) {
+          console.error("Error during registration:", error);
         }
       };
-    
   
 
     return (
@@ -52,7 +49,7 @@ const SignUp = () => {
 
                 <img src={SignUpLogo} alt="signupLogo" className='w-fit' />
             </div>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleRegister} >
             <div className='flex flex-col justify-center items-center w-1/2 gap-y-4'>
                 <div className='w-[541px] h-[691px] rounded-3xl loginCard flex flex-col justify-center items-center gap-6'>
                     <p className='font-Inter font-medium text-[32px] leading-[38.73px] text-[#000000] pb-5'>Fill in your details</p>
@@ -63,8 +60,8 @@ const SignUp = () => {
                             type="text"
               name="fullname"
               id="fullname"
+              onChange={(e) => setfullname(e.target.value)}
               value={fullname}
-              onChange={handleChange}
               placeholder='Full Name'
               required
 
@@ -76,7 +73,7 @@ const SignUp = () => {
                             name="username"
                             id="username"
                             value={username}
-                            onChange={handleChange}
+                            onChange={(e) => setusername(e.target.value)}
                             required
                             placeholder='User Name'
                         />
@@ -85,8 +82,8 @@ const SignUp = () => {
                             type="email"
               name="email"
               id="email"
+              onChange={(e) => setEmail(e.target.value)}
               value={email}
-              onChange={handleChange}
               required
               placeholder='Email'
                         />
@@ -94,9 +91,9 @@ const SignUp = () => {
                             className='w-full h-[54px] font-Inter font-medium text-[16px] leading-[19.36px] text-[#7D7D7D] outline-none border-b-[1px] border-[#989898] pt-6'
                             type="password"
               name="password"
-              id="password"
+              onChange={(e) => setPassword(e.target.value)}
               value={password}
-              onChange={handleChange}
+              id="password"
               required
               placeholder='Password'
                         />
@@ -106,9 +103,16 @@ const SignUp = () => {
                         <div className='flex gap-x-1'>
                             <input
                             type="radio"
+                            onChange={(e) => {
+                                if(e.target.checked){
+                                    setType("Candidate")
+                                }
+                                else{
+                                    setType("Recruiter")
+                                }
+                            }}
               name="accountType"
-              id="accountType"
-              value={Conditions}/>
+              id="accountType"/>
                             <label htmlFor="accountType">Candidate</label>
                         </div>
                         <div className='flex gap-x-1'>
@@ -116,7 +120,14 @@ const SignUp = () => {
                                 type="radio"
               name="Type"
               id="Type"
-              value={Type}
+              onChange={(e) => {
+                if(e.target.checked){
+                    setType("Recruiter")
+                }
+                else{
+                    setType("Candidate")
+                }
+            }}
               />
                             <label htmlFor="accountType">Recruiter</label>
                         </div>
@@ -124,7 +135,7 @@ const SignUp = () => {
                     </div>
 
                     <div className='flex items-center w-[360px] gap-x-1'>
-                        <input type="checkbox" name="terms" id="terms" />
+                        <input type="checkbox"  onChange={(e) => setConditions(e.target.checked)} name="terms" id="terms" />
                         <div className='flex items-center w-full gap-x-1'>
                             <p className='font-Inter font-medium text-[12px] leading-[14.52px]'>I agree to all statements including in </p>
                             <span className='font-Inter font-medium text-[12px] leading-[14.52px] text-[#1E93FF] underline'>Terms of Service.</span>
@@ -134,7 +145,7 @@ const SignUp = () => {
 
                     <div className='flex justify-between w-[360px] items-center'>
                         <div className='px-[44px] py-[14px] bg-[#33B249]'>
-                            <button className='text-[#ffffff] font-Inter text-[14px] leading-[16.94px] font-semibold'>Register Now</button>
+                            <button className='text-[#ffffff] font-Inter text-[14px] leading-[16.94px] font-semibold' onClick={ (e)=>{handleRegister(e)}}>Register Now</button>
                         </div>
                         <p className='text-[#1E93FF] font-Inter font-semibold text-[13px] leading-[15.73px] underline'>
                             <Link to='/login'>
