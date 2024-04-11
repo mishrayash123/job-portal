@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {  useState , useEffect } from 'react';
 import ProfileCard from '../assets/profile-card.png'
 import Saved from '../assets/saved.png'
 import Help from '../assets/help.png'
@@ -8,10 +8,17 @@ import { useAuth } from "../AuthContext";
 
 const ProfileModal = () => {
     const { logout} = useAuth();
+    const [email, setEmail] = useState('');
+    useEffect(() =>
+   {
+   const storeEmail = localStorage.getItem("email");
+   setEmail(storeEmail);
+  },[]);
+  
   return (
     <div className='flex flex-col w-[343px] h-[280px] rounded-lg bg-[#FFFFFF] profileCard'>
         <div className='w-full h-[calc(280px-39px)] px-6 py-7 flex flex-col gap-y-4'>
-            <p className='font-Roboto font-semibold text-[24px] leading-[28.13px] text-[#424242] '>zeenajalil@gmail.com</p>
+            <p className='font-Roboto font-semibold text-[24px] leading-[28.13px] text-[#424242] '>{email}</p>
             <div className='flex flex-col  pt-3'>
                 <div className='flex items-center px-2 py-2 gap-x-2 hover:bg-lightBlue transition-all duration-200 rounded-md cursor-pointer'>
                     <img src={ProfileCard} alt="profile-card" />

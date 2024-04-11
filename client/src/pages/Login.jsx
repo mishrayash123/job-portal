@@ -35,6 +35,8 @@ const Login = () => {
         login();
         localStorage.setItem("jobportaltoken", data.sessionToken);
         localStorage.setItem("jobportaluserId", data._id);
+         localStorage.setItem("username", data.username);
+          localStorage.setItem("email", data.email);
         alert("Logged in successfully");
         navigate("/");
       } else { // agar response ok nii hai to
