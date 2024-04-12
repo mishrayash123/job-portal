@@ -1,3 +1,19 @@
 .detailsCard{
     box-shadow: 0px 30px 101.5999984741211px 13px #0000001A;
 }
+
+
+
+/* Styles for profile picture */
+.profile-picture {
+    width: 100px; /* Adjust size as needed */
+    height: 100px; /* Adjust size as needed */
+    border-radius: 50%; /* Make it round */
+}
+
+/* Adjustments for the uploaded profile picture */
+.uploaded-profile-picture {
+    max-width: 100px; /* Adjust maximum width */
+    max-height: 100px; /* Adjust maximum height */
+    border-radius: 50%; /* Make it round */
+}

@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-import Freelance from '../assets/freelance.png'
-import ArrowLeft from '../assets/arrow-left.png'
-import Upload from '../assets/upload.png'
-import './JobApplyPage2.css'
-import { Link } from 'react-router-dom'
-import ArrowDown from '../assets/down_arrow.png'
+import React, { useState } from 'react';
+import Freelance from '../assets/freelance.png';
+import ArrowLeft from '../assets/arrow-left.png';
+import Upload from '../assets/upload.png';
+import './JobApplyPage2.css';
+import { Link } from 'react-router-dom';
+import ArrowDown from '../assets/down_arrow.png';
 
 const JobApplyPage2 = () => {
     const [isCollapsed, setIsCollapsed] = useState(true);
@@ -12,6 +12,14 @@ const JobApplyPage2 = () => {
     const toggleCollapse = () => {
         setIsCollapsed(!isCollapsed);
     };
+
+    const handleFileUpload = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            alert("CV uploaded successfully!");
+        }
+    };
+
     return (
         <div className='flex flex-col w-full '>
             <div className='w-full h-[258px] bg-[#525CEB] px-[50px] my-auto'>
@@ -42,25 +50,25 @@ const JobApplyPage2 = () => {
                         <p className='font-bold font-SofiaSans text-[32px] leading-[38.4px] py-7'>Add a CV for the employer</p>
 
                         <div className='border-[2px] border-[#DFDFDF] rounded-[18px] w-full flex gap-x-4 p-5'>
-                            <img src={Upload} alt="upload" />
-                            <div className='flex flex-col' >
-                                <p className='font-bold font-SofiaSans text-[28px] leading-[33.6px]'>Upload a CV</p>
-                                <p className='font-LeagueSpartan font-medium text-[14.56px] leading-[14.56px] text-[#6C6C6C]'>
-                                    Accepted file types are PDF, DOCX, RTF or TXT.
-                                </p>
-                            </div>
+                            <label htmlFor="cvUpload" className="cursor-pointer">
+                                <img src={Upload} alt="upload" />
+                                <div className='flex flex-col'>
+                                    <p className='font-bold font-SofiaSans text-[28px] leading-[33.6px]'>Upload a CV</p>
+                                    <p className='font-LeagueSpartan font-medium text-[14.56px] leading-[14.56px] text-[#6C6C6C]'>
+                                        Accepted file types are PDF, DOCX, RTF or TXT.
+                                    </p>
+                                </div>
+                            </label>
+                            <input type="file" id="cvUpload" style={{ display: "none" }} onChange={handleFileUpload} />
                         </div>
 
                         <Link className='py-8 w-full' to='/job-apply/page-3'>
                             <button className='px-[264px] py-[22px] rounded-lg bg-darkBlue w-full'>
                                 <p className='font-Roboto font-bold text-[15px] leading-[17.58px] text-[#ffffff] uppercase'>
-                                        Continue
+                                    Continue
                                 </p>
                             </button>
-
                         </Link>
-
-
                     </div>
                 </div>
                 <div className='w-[40%] bg-[#F3F4F6] flex flex-col justify-center items-center  py-20'>
@@ -104,11 +112,9 @@ const JobApplyPage2 = () => {
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
-    )
+    );
 }
 
-export default JobApplyPage2
+export default JobApplyPage2;
