@@ -9,7 +9,8 @@ const UserSchema = new mongoose.Schema({
   userid: { type: String, required: true },
   applicationemail: { type: String, required: true },
   salary: { type: String, required: true },
-  description: { type: String, required: true }
+  description: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now },
 });
 
  export const UserModel = mongoose.model('jobs', UserSchema);
@@ -17,6 +18,5 @@ const UserSchema = new mongoose.Schema({
 // User Actions
  export const getjobs = () => UserModel.find();
  export const getjobsById = (id) => UserModel.findById(id);
- export const getjobsByuserid = (title) => UserModel.findOne({ 'title': title});
  export const createjobs = (values) => new UserModel(values).save().then((user) => user.toObject());
  export const deletejobsById = (id) => UserModel.findOneAndDelete({ _id: id });

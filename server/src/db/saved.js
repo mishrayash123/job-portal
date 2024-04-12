@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 const UserSchema = new mongoose.Schema({
   jobid: { type: String, required: true },
   userid: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now },
 });
 
  export const UserModel = mongoose.model('savejob', UserSchema);

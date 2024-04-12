@@ -17,6 +17,7 @@ const UserSchema = new mongoose.Schema({
   youtube: { type: String },
   role: { type: String },
   name: { type: String },
+  createdAt: { type: Date, default: Date.now },
 });
 
  export const UserModel = mongoose.model('employer', UserSchema);
