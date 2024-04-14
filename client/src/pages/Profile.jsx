@@ -19,28 +19,6 @@ const Profile = () => {
     fileInputRef.current.click();
   };
 
-  // const handleUpdateProfile = async () => {
-  //   // Prepare the updated user data
-  //   const updatedUserData = {
-  //     // Include the fields you want to update here
-  //     // For example:
-  //     // name: 'New Name',
-  //     // email: 'new.email@example.com',
-  //     // ...
-  //   };
-
-  //   try {
-  //     // Send a PUT request to the backend API to update the user
-  //     const response = await axios.put('http://localhost:8080/Employer', updatedUserData);
-
-  //     if (response.status === 200) {
-  //       // Handle successful update
-  //       console.log('User updated successfully');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error updating user:', error);
-  //   }
-  // };
 
   const [username, setUsername]  = useState(''); 
   const [email, setEmail] = useState('');

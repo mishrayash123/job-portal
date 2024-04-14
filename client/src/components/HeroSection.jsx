@@ -1,5 +1,6 @@
 import React from 'react'
 import './HeroSection.css'
+import { Link } from 'react-router-dom'
 
 const HeroSection = () => {
     return (
@@ -41,8 +42,9 @@ const HeroSection = () => {
                     <path d="M4.375 0.583374H7.625V11.4167H4.375V0.583374Z" fill="#2E216B" />
                     <path d="M0.582031 4.37506H11.4154V7.62506H0.582031V4.37506Z" fill="#2E216B" />
                 </svg>
+                <Link to='/job-post'>
                 <p className='font-Roboto font-[500] text-[24px] leading-[28.13px] text-[#2E216B]'>Post a job</p>
-
+                </Link>
 
             </div>
 
@@ -51,8 +53,9 @@ const HeroSection = () => {
             </div>
 
             <div className='w-[379px] h-[69px] top-[902px] left-[138px] bg-[#ffffff] absolute z-10 flex justify-center items-center'>
-                
+                <Link to='/job'>
                 <p className=' w-full h-[38px]  font-Roboto font-[400] text-[32px] leading-[37.5px] text-center text-[#000000] '> FIND YOUR JOB !</p>
+                 </Link>       
             </div>
 
             <div className='absolute w-[641px] h-[641px] top-[181px] left-[765px]'>

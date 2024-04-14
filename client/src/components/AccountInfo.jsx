@@ -1,12 +1,59 @@
-import React from 'react'
+import React , { useState , useEffect } from 'react'
 import Employer from '../assets/employer.png'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import './AccountInfo.css'
 import NotificationBell from '../assets/notification_bell.png'
+import { Link } from 'react-router-dom'
 
 
 export const AccountInfo = () => {
+    const [username, setUsername]  = useState(''); 
+    const [email, setEmail] = useState('');
+  
+    useEffect(() =>
+     { const storeUsername = localStorage.getItem("username");
+     setUsername(storeUsername);
+     const storeEmail = localStorage.getItem("email");
+     setEmail(storeEmail);
+    },[]);
+ 
+    const [currentEmail, setCurrentEmail] = useState('enter@example.com');
+    const [isEditingEmail, setIsEditingEmail] = useState(false);
+  
+    const handleEditEmail = () => {
+      setIsEditingEmail(true);
+    };
+  
+    const handleSaveEmail = () => {
+      setCurrentEmail(email);
+      setIsEditingEmail(false);
+    };
+  
+    const handleEmailChange = (e) => {
+      setEmail(e.target.value);
+    };
+    
+      const [phoneNumber, setPhoneNumber] = useState('91+12340 098767');
+  const [currentPhoneNumber, setCurrentPhoneNumber] = useState('91+12340 098767');
+  const [isEditingPhoneNumber, setIsEditingPhoneNumber] = useState(false);
+
+  const handleEditPhoneNumber = () => {
+    setIsEditingPhoneNumber(true);
+  };
+
+  const handleSavePhoneNumber = () => {
+    setCurrentPhoneNumber(phoneNumber);
+    setIsEditingPhoneNumber(false);
+  };
+
+  const handlePhoneNumberChange = (e) => {
+    setPhoneNumber(e.target.value);
+  };
+
+   
+
+    
     return (
         <div className='flex flex-col w-full'>
             <Navbar />
@@ -24,14 +71,17 @@ export const AccountInfo = () => {
                     <div className='flex items-center gap-x-2 '>
                         <div className='border-[1px] border-darkBlue flex items-center px-[20px] py-[10px] rounded-lg gap-x-3'>
                             <img src={NotificationBell} alt="notification" />
+                            <Link to='/employer/notification'>
                             <p className='text-darkBlue'>Notification</p>
-
+                            </Link>
                         </div>
 
                         <div className='flex gap-x-2'>
-                            <p className='font-Roboto font-light text-[15px] leading-[17.58px] text-darkBlue'>Job Seeker</p>
+                            <Link to='/profile'>
+                            <p className='font-Roboto font-light text-[15px] leading-[17.58px] text-darkBlue'>Job Seeker</p></Link>
                             <p className='font-Roboto font-light text-[16px] leading-[17.58px] text-darkBlue'>/</p>
-                            <p className='font-Roboto font-bold text-[15px] leading-[17.58px] text-darkBlue'>Employer</p>
+                            <Link to='/employer/account'>
+                            <p className='font-Roboto font-bold text-[15px] leading-[17.58px] text-darkBlue'>Employer</p></Link>
                         </div>
                     </div>
 
@@ -51,11 +101,11 @@ export const AccountInfo = () => {
                             </div>
 
                             <div className='flex flex-col justify-between gap-y-5'>
-                                <p className='font-light text-[24px] leading-[28.13px] '>Zeena Jalil</p>
+                                <p className='font-light text-[24px] leading-[28.13px] '>{username}</p>
                                 <div className='border-[1px] border-[#C2C2C2]'></div>
-                                <p className=' font-thin text-[24px] leading-[28.13px]'>zennajalil@gmail.com</p>
+                                <p  className=' font-thin text-[24px] leading-[28.13px]'>{currentEmail}</p>
                                 <div className='border-[1px] border-[#C2C2C2]'></div>
-                                <p className=' font-thin text-[24px] leading-[28.13px]'>91+ 12340 098767</p>
+                                <p  className=' font-thin text-[24px] leading-[28.13px]'>{currentPhoneNumber}</p>
                                 <div className='border-[1px] border-[#C2C2C2]'></div>
                                 <p className=' font-light text-[24px] leading-[28.13px]'>Hiring Manager</p>
                                 <div className='border-[1px] border-[#C2C2C2]'></div>
@@ -70,19 +120,47 @@ export const AccountInfo = () => {
                                 </div>
                                 <div className='border-[1px] border-[#C2C2C2] -mt-[4px]'></div>
                                 <div className="flex justify-end">
-                                    <button className='px-[20px] py-[10px] w-fit rounded-lg border-[1px] border-darkBlue'>
-                                        <p className='font-Roboto font-bold text-[15px] leading-[17.58px] text-darkBlue'>
-                                            Change Email
-                                        </p>
-                                    </button>
+                                {isEditingEmail ? (
+                                     <div>
+                              <input  type="email" value={email} onChange={handleEmailChange}
+        placeholder="Enter new email"
+      />
+      <button onClick={handleSaveEmail} className='px-[20px] py-[10px] w-fit rounded-lg border-[1px] border-darkBlue'>
+        <p className='font-Roboto font-bold text-[15px] leading-[17.58px] text-darkBlue'>
+          Save
+        </p>
+      </button>
+    </div>
+  ) : (
+    <button onClick={handleEditEmail} className='px-[20px] py-[10px] w-fit rounded-lg border-[1px] border-darkBlue'>
+      <p className='font-Roboto font-bold text-[15px] leading-[17.58px] text-darkBlue'>
+        Change Email
+      </p>
+    </button>
+  )}
+  
                                 </div>
                                 <div className='border-[1px] border-[#C2C2C2] -mt-[3px]'></div>
                                 <div className="flex justify-end">
-                                    <button className='px-[20px] py-[10px] w-fit rounded-lg border-[1px] border-darkBlue'>
+                                               {isEditingPhoneNumber ? (
+                                     <div>
+                              <input  type="phonenumber" value={phoneNumber} onChange={handlePhoneNumberChange}
+        placeholder="Enter new phoneNumber"
+      />
+                                    <button onClick={handleSavePhoneNumber}  className='px-[20px] py-[10px] w-fit rounded-lg border-[1px] border-darkBlue'>
                                         <p className='font-Roboto font-bold text-[15px] leading-[17.58px] text-darkBlue'>
-                                            Edit Phone Number
+                                            Save
                                         </p>
                                     </button>
+                                </div>
+                                 ) : (
+                                     <button onClick={handleEditPhoneNumber} className='px-[20px] py-[10px] w-fit rounded-lg border-[1px] border-darkBlue'>
+      <p className='font-Roboto font-bold text-[15px] leading-[17.58px] text-darkBlue'>
+        Change Phone
+      </p>
+    </button>
+  )}
+  
                                 </div>
                                 <div className='border-[1px] border-[#C2C2C2] -mt-[3px]'></div>
                                 <div>

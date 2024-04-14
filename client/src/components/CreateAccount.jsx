@@ -36,7 +36,6 @@ const CreateAccount = () => {
       fileInputRef.current.click();
     };
 
-    // const [userid, setUserid] = useState("");
     // const [profilepic, setProfilepic] = useState("");
     const [companyname, setCompanyname] = useState("");
    // const [totalemploye, setTotalemploye] = useState("");
@@ -49,24 +48,21 @@ const CreateAccount = () => {
     const [insta, setInsta] = useState("");
     const [youtube, setYoutube] = useState("");
     const navigate = useNavigate();
-    // const [role, setRole] = useState("");
-    // const [name, setName] = useState("");
-    // const [employerData, setEmployerData] = useState(null);
+    const [role, setRole] = useState("");
 
     const handleAccount = async (e) => {
         e.preventDefault();
 
         try {
-            const response = await axios.post("http://localhost:8080/db/addtoemployers", {
+            const response = await axios.post("http://localhost:8080/addtoemployers", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
                      email,
-                    // userid,
                     // profilepic,
-                    // companyname,
+                    companyname,
                     // totalemploye,
                     fullname,
                     description,
@@ -76,14 +72,13 @@ const CreateAccount = () => {
                     fb,
                     insta,
                     youtube,
-                    // role,
-                    // name,
+                    role,
                 }),
             });
 
             if (response.ok) {
                 alert("Account created successfully and now you can post your Job posted");
-                console.log(  email, fullname, description,phone, website,twitter,
+                console.log(  email, companyname, fullname, description,phone, website,twitter,
                     fb,insta, youtube,);
                     navigate("/employer/create-account");
             } else {
@@ -191,6 +186,18 @@ return (
                       className='outline-none w-full border-[1.3px] border-[#989898] rounded-2xl px-4 py-3'
                       type="phone"
                       value={phone} onChange={(e) => setPhone(e.target.value)} 
+                       />
+              </div>
+              <div className='flex flex-col gap-y-2'>
+                  <p className='font-Roboto font-medium text-[24px] leading-[28.13px]'>
+                      Your Role
+                      <span className='text-[#FF0000]'>*</span>
+                  </p>
+                  <p className='font-Roboto font-normal text-[15px] leading-[17.58px] text-[#6C6C6C]'>For account management communication. Not visible to jobseekers.</p>
+                  <input
+                      className='outline-none w-full border-[1.3px] border-[#989898] rounded-2xl px-4 py-3'
+                      type="role"
+                      value={role} onChange={(e) => setRole(e.target.value)} 
                        />
               </div>
 

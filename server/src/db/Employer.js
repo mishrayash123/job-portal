@@ -3,20 +3,18 @@ import mongoose from 'mongoose';
 // User Config
 const UserSchema = new mongoose.Schema({
   email: { type: String, required: true },
-  userid: { type: String, required: true },
   profilepic: { type: String },
   companyname: { type: String },
   totalemploye: { type: String },
   fullname: { type: String },
   description: { type: String },
-  phone: { type: String },
+  phone: { type: Number },
   website: { type: String },
   twitter: { type: String },
   fb: { type: String },
   insta: { type: String },
   youtube: { type: String },
   role: { type: String },
-  name: { type: String },
   createdAt: { type: Date, default: Date.now },
 });
 

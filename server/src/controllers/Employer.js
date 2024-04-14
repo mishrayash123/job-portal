@@ -18,7 +18,6 @@ export const addtoEmployers = async (req, res) => {
 
       const user  = await createEmployer({
         email,
-        userid,
         profilepic,
         companyname,
         totalemploye,
@@ -31,7 +30,6 @@ export const addtoEmployers = async (req, res) => {
         insta,
         youtube,
         role,
-        name,
       });
       return res.status(200).json(user).end();
     } catch (error) {
