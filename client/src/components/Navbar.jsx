@@ -1,28 +1,55 @@
 import React, { useEffect, useState } from 'react'
 import { MdOutlineSearch } from "react-icons/md";
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation} from 'react-router-dom';
 import { BsFillBellFill } from "react-icons/bs";
 import User from '../assets/User.png'
 import './Navbar.css'
 import ProfileModal from './ProfileModal';
 import { useAuth } from "../AuthContext";
+//import axios from 'axios';
 
 const Navbar = () => {
     const { isLoggedIn} = useAuth();
-
     const location = useLocation();
     const [activeNavLink, setActiveNavLink] = useState(null);
-
     const [showModal, setShowModal] = useState(false);
-
     const handleClick = (event) => {
         event.preventDefault(); // Prevent default navigation behavior
         setShowModal(prevState => !prevState); // Show the modal
     };
-
     useEffect(() => {
         setActiveNavLink(location.pathname);
     }, [location]);
+
+    //const history = useHistory();
+   /// const [userHasEmployeeAccount, setUserHasEmployeeAccount] = useState(false);
+
+    // const checkUserEmployeeAccount = async () => {
+    //     try {
+    //       const response = await axios.get(`http://localhost:8080/db//getemployers`);
+    //     //  const userData = response.data;
+    //       // Check if userData indicates the user has an Employee account
+    //       const hasEmployeeAccount = /* Your logic to determine if the user has an Employee account */
+    //     //  setUserHasEmployeeAccount(hasEmployeeAccount);
+    //      // return hasEmployeeAccount;
+    //     } catch (error) {
+    //       console.error('Error checking user Employee account:', error);
+    //       // Handle error appropriately, e.g., show an error message to the user
+    //     }
+    //   };
+
+       // Function to handle button click
+//   const handleButtonClick = async () => {
+//     const hasEmployeeAccount = await checkUserEmployeeAccount();
+//     if (!hasEmployeeAccount) {
+//       // Redirect to create account page if the user hasn't created an Employee account
+//       window.location.href = '/job-post';
+//     } else {
+//       // Redirect to job post page if the user has an Employee account
+//       window.location.href = '/createAccount';
+//     }
+//   };
+    
 
     // const handlePostJobClick = () => {
     //     // If employee account exists, show success message and navigate to job post page
