@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema({
   profilepic: { type: String },
   companyname: { type: String },
   totalemploye: { type: String },
-  fandlname: { type: String },
+  fullname: { type: String },
   description: { type: String },
   phone: { type: String },
   website: { type: String },

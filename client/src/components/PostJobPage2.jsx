@@ -17,11 +17,11 @@ const PostJobPage2 = () => {
             <div className='flex justify-center mx-auto pt-[100px] pb-[300px] flex-col'>
                 <JobCard
                     companyLogo={Logo}
-                    companyName={"Senior Health and Food"}
+                   companyName={"jobtitle"}
                     firm={"KARP Ltd"}
-                    salary={"₹30k - ₹40k"}
-                    location={"Grand Central Pkwy Hollis NY 11003 USA"}
-                    posted={"1 Day ago"}
+                    salary = {"salary"}
+                    location= {"location"}
+                    posted= {"10days "}
                 />
 
 

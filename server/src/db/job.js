@@ -6,9 +6,8 @@ const UserSchema = new mongoose.Schema({
   jobtitle: { type: Number, required: true },
   location: { type: String, required: true },
   jobtags: { type: String, required: true },
-  userid: { type: String, required: true },
   applicationemail: { type: String, required: true },
-  salary: { type: String, required: true },
+  salary: { type: Number, required: true },
   description: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
 });

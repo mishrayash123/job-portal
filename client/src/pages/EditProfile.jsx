@@ -1,15 +1,15 @@
-import React, { useState } from 'react'
+//import React, { useState } from 'react'
 import Navbar from '../components/Navbar'
 import ArrowBack from '../assets/arrow-back.png'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link,} from 'react-router-dom'
 import Flag from '../assets/flag-india.png'
 import ArrowRight from '../assets/arrow-right.png'
-import EmailChangePopup from '../components/EmailChangePopup'
+///import EmailChangePopup from '../components/EmailChangePopup'
 
 const EditProfile = () => {
 //     const [popupVisible, setPopUpVisible] = useState(false);
 //     const handlePopup = () => setPopUpVisible(true);
-//      const navigate = useNavigate();
+   //  const navigate = useNavigate();
 
 //   const [firstName, setFirstName] = useState('');
 //   const [lastName, setLastName] = useState('');

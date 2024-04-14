@@ -23,6 +23,19 @@ const Navbar = () => {
     useEffect(() => {
         setActiveNavLink(location.pathname);
     }, [location]);
+
+    // const handlePostJobClick = () => {
+    //     // If employee account exists, show success message and navigate to job post page
+    //     if (employeeAccountExists) {
+    //         alert('Employee account exists. Redirecting to job post page.');
+    //         // Navigate to job post page
+    //         window.location.href = '/job-post';
+    //     } else {
+    //         // If employee account doesn't exist, show error message and redirect to create account page
+    //         alert('Employee account does not exist. Redirecting to create account page.');
+    //         // Redirect to create account page
+    //         window.location.href = '/createAccount';
+    //     }
     return (
         <div className='bg-[#3D3B40] bg-opacity-80  h-[92px] w-full flex  justify-center items-center relative top-0 z-50'>
             <div className='flex items-center justify-between h-[47px] w-[1282px] relative opacity-100'>
@@ -77,7 +90,7 @@ const Navbar = () => {
                     {isLoggedIn ?
                         (<>
                             <button className='h-[41px] w-fit rounded-md bg-darkBlue px-[28px] py-[10px] '>
-                                <Link to='/job-post'>
+                                <Link to='/job-post' >
                                     <p className='text-[#ffffff] leading-[21.09px] font-bold font-Roboto text-[18px]'>Post job</p>
                                 </Link>
                             </button>

@@ -1,6 +1,4 @@
-	  
-			  
-import React, { useEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Navbar from './Navbar';
 import Team from '../assets/team.png';
 import './CreateAccount.css';
@@ -15,28 +13,80 @@ import Undo from '../assets/undo.png';
 import Redo from '../assets/redo.png';
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
-
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 const CreateAccount = () => {
-const [employerData, setEmployerData] = useState(null);
 
-useEffect(() => {
-const fetchData = async () => {
-try {
-  const response = await fetch("http://localhost:8080/db/Employer");
-  if (response.ok) {
-      const data = await response.json();
-      setEmployerData(data);
-  } else {
-      throw new Error('Failed to fetch data');
-  }
-} catch (error) {
-  console.error('Error fetching data:', error);
-  // Handle error (e.g., show error message to user)
-}
-};
+    const [selectedFile, setSelectedFile] = useState(null);
+    const fileInputRef = useRef(null);
+  
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        setSelectedFile(file);
+      // You can perform any additional actions upon file selection here
+    };
+   
+     const openFilePicker = () => {
+      fileInputRef.current.click();
+    };
+    // const [email, setEmail] = useState("");
+    // const [userid, setUserid] = useState("");
+    // const [profilepic, setProfilepic] = useState("");
+    const [companyname, setCompanyname] = useState("");
+   // const [totalemploye, setTotalemploye] = useState("");
+    const [fullname, setFullname] = useState("");
+    const [description, setDescription] = useState("");
+    const [phone, setPhone] = useState("");
+    const [website, setWebsite] = useState("");
+    const [twitter, setTwitter] = useState("");
+    const [fb, setFb] = useState("");
+    const [insta, setInsta] = useState("");
+    const [youtube, setYoutube] = useState("");
+    const navigate = useNavigate();
+    // const [role, setRole] = useState("");
+    // const [name, setName] = useState("");
+    // const [employerData, setEmployerData] = useState(null);
 
-fetchData();
-}, []);
+    const handleAccount = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await axios.post("http://localhost:8080/db/Employer", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    // email,
+                    // userid,
+                    // profilepic,
+                    // companyname,
+                    // totalemploye,
+                    fullname,
+                    description,
+                    phone,
+                    website,
+                    twitter,
+                    fb,
+                    insta,
+                    youtube,
+                    // role,
+                    // name,
+                }),
+            });
+
+            if (response.ok) {
+                alert("Account created successfully and now you can post your Job posted");
+                console.log(   fullname, description,phone, website,twitter,
+                    fb,insta, youtube,);
+                    navigate("/employer/create-account");
+            } else {
+                alert("Something went wrong...please check credentials");
+            }
+        } catch (error) {
+            console.error("Error during Account Creation:", error);
+        }
+    };
 
 return (
 <div className='flex flex-col w-full'>
@@ -44,7 +94,7 @@ return (
 <div className='flex flex-col w-full '>
   <div className='flex justify-between px-[100px] items-center bg-[#BFCFE7]'>
       <p className='font-Roboto font-bold text-[58px] leading-[67.97px] text-[#3D3B40]'>Create an Employer Account</p>
-      <img src={Team} alt="team" />
+    <img src={Team} alt="team"/>
   </div>
 
 
@@ -58,14 +108,28 @@ return (
           <div className='w-[893px] mx-auto flex flex-col gap-y-14'>
               <div className='flex items-center justify-between py-9'>
                   <div className='flex items-center'>
-                      <img src={Account} alt="account" />
+                  {selectedFile ? (
+                        <img src={URL.createObjectURL(selectedFile)} alt="account" className="w-40 h-40 rounded-full" />
+                    ) : (
+                            <img src={Account} alt="account"/> 
+                    )}
                       <div className='flex flex-col'>
                           <p className='font-Roboto font-medium text-[32px] leading-[37.5px] text-[#3f3f3f]'>Profile picture</p>
                           <p className='font-Roboto font-medium text-[20px] leading-[23.44px] text-[#9e9e9e]'>PNG, JPG up to 5MB</p>
                       </div>
                   </div>
+                  <input ref={fileInputRef} type="file"style={{ display: 'none' }}
+                 onChange={handleFileChange} accept="image/jpeg, image/png, image/gif,image/jpg." // Add acceptable file types here
+                 />
+        <button
+          className='font-LeagueSpartan font-semibold text-[20px] leading-[22.4px] text-darkBlue'
+          type="button"
+          onClick={openFilePicker}
+        >
+          <p >Upload</p>
+        </button>
+       
 
-                  <p className='font-LeagueSpartan font-semibold text-[20px] leading-[22.4px] text-darkBlue'>Upload</p>
               </div>
 
 
@@ -76,7 +140,9 @@ return (
                   </p>
                   <input
                       className='outline-none w-full border-[1.3px] border-[#989898] rounded-2xl px-4 py-3'
-                      type="text" />
+                      type="companyname"
+                      value={companyname} onChange={(e) => setCompanyname(e.target.value)}  
+                    />
               </div>
 
               <div className='flex flex-col gap-y-2'>
@@ -98,9 +164,9 @@ return (
                   </p>
                   <input
                       className='outline-none w-full border-[1.3px] border-[#989898] rounded-2xl px-4 py-3'
-                      type="text" />
+                      type="fullname"
+                      value={fullname} onChange={(e) => setFullname(e.target.value)}   />
               </div>
-
               <div className='flex flex-col gap-y-2'>
                   <p className='font-Roboto font-medium text-[24px] leading-[28.13px]'>
                       Your phone number
@@ -109,7 +175,9 @@ return (
                   <p className='font-Roboto font-normal text-[15px] leading-[17.58px] text-[#6C6C6C]'>For account management communication. Not visible to jobseekers.</p>
                   <input
                       className='outline-none w-full border-[1.3px] border-[#989898] rounded-2xl px-4 py-3'
-                      type="text" />
+                      type="phone"
+                      value={phone} onChange={(e) => setPhone(e.target.value)} 
+                       />
               </div>
 
               <div className='flex flex-col gap-y-1 w-full'>
@@ -145,7 +213,8 @@ return (
 
                       </div>
                       <div className='w-full '>
-                          <textarea name="description" id="description" className='w-full h-[240px] border-b-[1.3px] border-[#989898] resize-none '></textarea>
+                          <textarea name="description" id="description" className='w-full h-[240px] border-b-[1.3px] border-[#989898] resize-none '
+                            value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
                       </div>
                   </div>
 
@@ -159,7 +228,8 @@ return (
 
                   <input
                       className='outline-none w-full border-[1.3px] border-[#989898] rounded-2xl px-4 py-3 font-Roboto font-normal text-[24px] leading-[28.13px] text-[#6C6C6C]'
-                      type="text"
+                      type="website"
+                      value={website} onChange={(e) => setWebsite(e.target.value)}
                       placeholder='http://' />
               </div>
 
@@ -171,7 +241,8 @@ return (
 
                   <input
                       className='outline-none w-full border-[1.3px] border-[#989898] rounded-2xl px-4 py-3 font-Roboto font-normal text-[24px] leading-[28.13px] text-[#6C6C6C]'
-                      type="text"
+                      type="twitter"
+                      value={twitter} onChange={(e) => setTwitter(e.target.value)}
                       placeholder='@yourcompany' />
               </div>
 
@@ -183,7 +254,8 @@ return (
 
                   <input
                       className='outline-none w-full border-[1.3px] border-[#989898] rounded-2xl px-4 py-3 font-Roboto font-normal text-[24px] leading-[28.13px] text-[#6C6C6C]'
-                      type="text"
+                      type="fb"
+                      value={fb} onChange={(e) => setFb(e.target.value)}
                       placeholder='@yourcompany' />
               </div>
 
@@ -195,7 +267,8 @@ return (
 
                   <input
                       className='outline-none w-full border-[1.3px] border-[#989898] rounded-2xl px-4 py-3 font-Roboto font-normal text-[24px] leading-[28.13px] text-[#6C6C6C]'
-                      type="text"
+                      type="insta"
+                      value={insta} onChange={(e) => setInsta(e.target.value)}
                       placeholder='@yourcompany' />
               </div>
 
@@ -207,13 +280,14 @@ return (
 
                   <input
                       className='outline-none w-full border-[1.3px] border-[#989898] rounded-2xl px-4 py-3 font-Roboto font-normal text-[24px] leading-[28.13px] text-[#6C6C6C]'
-                      type="text"
+                      type="youtube"
+                      value={youtube} onChange={(e) => setYoutube(e.target.value)}
                       placeholder='URL' />
               </div>
 
               <div className='flex justify-end w-full pt-20'>
-                  <Link to='/components/postjobpage1'>
-                      <button className='px-[68px] py-[22px] w-fit rounded-lg bg-darkBlue flex items-center gap-x-2'>
+                  <Link to='/components/job-post'>
+                      <button onClick={handleAccount} className='px-[68px] py-[22px] w-fit rounded-lg bg-darkBlue flex items-center gap-x-2'>
                           <p className='uppercase font-Roboto font-black text-[20px] leading-[23.44px] text-[#ffffff]'>CONTINUE</p>
                       </button>
                   </Link>

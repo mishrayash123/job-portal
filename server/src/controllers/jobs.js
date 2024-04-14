@@ -4,14 +4,13 @@ import {createjobs ,getjobsById,getjobs,deletejobsById} from '../db/job.js';
 
 export const addtojobs = async (req, res) => {
     try {
-      const {email,jobtitle,location,jobtags,userid,applicationemail,salary,description} = req.body;
+      const {email,jobtitle,location,jobtags,applicationemail,salary,description} = req.body;
 
       const user  = await createjobs({
         email,
   jobtitle,
   location,
   jobtags,
-  userid,
   applicationemail,
   salary,
   description

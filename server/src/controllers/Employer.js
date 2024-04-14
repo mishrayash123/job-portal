@@ -22,7 +22,7 @@ export const addtoEmployers = async (req, res) => {
         profilepic,
         companyname,
         totalemploye,
-        fandlname,
+        fullname,
         description,
         phone,
         website,
