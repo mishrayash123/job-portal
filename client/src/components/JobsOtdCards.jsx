@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 
 const JobsOtdCards = (props) => {
     const { companyLogo, companyName, firm, salary, location, posted, jobType } = props;
@@ -46,7 +47,9 @@ const JobsOtdCards = (props) => {
                 </button>
 
                 <button className='px-[26px] py-[10px] rounded-lg bg-[#2E216B] w-fit'>
+                    <Link to='/job-apply'>
                     <p className='font-Roboto font-medium text-[13px] leading-[15.23px] text-[#FFFFFF] uppercase'>Apply</p>
+                    </Link>
                 </button>
                 <div className='text-[#2E216B] w-[25px] h-[25px]  like bg-[#ffffff] flex items-center justify-center rounded-md'>
                     <svg width="13.33px" height="12.23px" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">

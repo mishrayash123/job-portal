@@ -1,6 +1,7 @@
 import React from 'react'
 import Logo from '../assets/logo_1.svg'
 import './JobCard.css'
+import { Link } from 'react-router-dom'
 
 const JobCardWithShadow = () => {
   return (
@@ -52,10 +53,12 @@ const JobCardWithShadow = () => {
 
         <div className='flex flex-col gap-y-2'>
           <button className='p-[10px] rounded-lg bg-[#25C5D2] w-fit'>
-            <p className='font-Roboto font-medium text-[13px] leading-[15.23px] text-[#FFFFFF] uppercase'>Freelance</p>
+          <Link to='/job-apply'>
+            <p className='font-Roboto font-medium text-[13px] leading-[15.23px] text-[#FFFFFF] uppercase'>Freelance</p></Link>
           </button>
           <button className='px-[26px] py-[10px] rounded-lg bg-[#2E216B]'>
-          <p className='font-Roboto font-medium text-[13px] leading-[15.23px] text-[#FFFFFF] uppercase'>Apply</p>
+          <Link to='/job-apply'>
+          <p className='font-Roboto font-medium text-[13px] leading-[15.23px] text-[#FFFFFF] uppercase'>Apply</p></Link>
           </button>
         </div>  
 
