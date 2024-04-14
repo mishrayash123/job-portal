@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import Team from '../assets/team.png';
 import './CreateAccount.css';
@@ -16,6 +16,12 @@ import Footer from './Footer';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 const CreateAccount = () => {
+    const [email, setEmail] = useState('');
+    useEffect(() =>
+   {
+   const storeEmail = localStorage.getItem("email");
+   setEmail(storeEmail);
+  },[]);
 
     const [selectedFile, setSelectedFile] = useState(null);
     const fileInputRef = useRef(null);
@@ -29,7 +35,7 @@ const CreateAccount = () => {
      const openFilePicker = () => {
       fileInputRef.current.click();
     };
-    // const [email, setEmail] = useState("");
+
     // const [userid, setUserid] = useState("");
     // const [profilepic, setProfilepic] = useState("");
     const [companyname, setCompanyname] = useState("");
@@ -57,7 +63,7 @@ const CreateAccount = () => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    // email,
+                     email,
                     // userid,
                     // profilepic,
                     // companyname,
@@ -77,7 +83,7 @@ const CreateAccount = () => {
 
             if (response.ok) {
                 alert("Account created successfully and now you can post your Job posted");
-                console.log(   fullname, description,phone, website,twitter,
+                console.log(  email, fullname, description,phone, website,twitter,
                     fb,insta, youtube,);
                     navigate("/employer/create-account");
             } else {
@@ -130,6 +136,14 @@ return (
         </button>
        
 
+              </div>
+
+
+                 <div className='flex flex-col gap-y-2'>
+                  <p className='font-Roboto font-medium text-[24px] leading-[28.13px] flex items-center gap-x-2'>
+                      <span className='text-[#6C6C6C] font-Roboto font-normal text-[15px] leading-[17.58px]'></span>
+                      {email}
+                  </p>      
               </div>
 
 
