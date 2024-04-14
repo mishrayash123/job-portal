@@ -57,7 +57,7 @@ const CreateAccount = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post("http://localhost:8080/db/Employer", {
+            const response = await axios.post("http://localhost:8080/db/addtoemployers", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
