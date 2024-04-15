@@ -13,7 +13,7 @@ import Undo from '../assets/undo.png';
 import Redo from '../assets/redo.png';
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 const CreateAccount = () => {
     const [email, setEmail] = useState('');
@@ -36,58 +36,96 @@ const CreateAccount = () => {
       fileInputRef.current.click();
     };
 
-    // const [profilepic, setProfilepic] = useState("");
-    const [companyname, setCompanyname] = useState("");
-   // const [totalemploye, setTotalemploye] = useState("");
-    const [fullname, setFullname] = useState("");
-    const [description, setDescription] = useState("");
-    const [phone, setPhone] = useState("");
-    const [website, setWebsite] = useState("");
-    const [twitter, setTwitter] = useState("");
-    const [fb, setFb] = useState("");
-    const [insta, setInsta] = useState("");
-    const [youtube, setYoutube] = useState("");
-    const navigate = useNavigate();
-    const [role, setRole] = useState("");
-
-    const handleAccount = async (e) => {
-        e.preventDefault();
-
+    const [inputData, setInputData] = useState({
+                        email: '',
+                        userid: '',
+                        // profilepic: '',
+                        companyname: '',
+                        // totalemploye: '',
+                        fullname: '',
+                        description: '',
+                        phone: '',
+                        website: '',
+                        twitter: '',
+                        fb: '',
+                        insta: '',
+                        youtube: '',
+                        role: '',
+      });
+      const handleChange = (e) => {
+        setInputData({
+          ...inputData,
+          [e.target.name]: e.target.value,
+        });
+      };
+    
+      const handleSubmit = async () => {
         try {
-            const response = await axios.post("http://localhost:8080/addtoemployers", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                     email,
-                    // profilepic,
-                    companyname,
-                    // totalemploye,
-                    fullname,
-                    description,
-                    phone,
-                    website,
-                    twitter,
-                    fb,
-                    insta,
-                    youtube,
-                    role,
-                }),
-            });
+          const response = await axios.post('http://localhost:8080/addtoemployers', inputData); // Send POST request to backend
+          console.log('Response from backend:', response.data);
+          // Reset input fields after successful submission
+          setInputData({
+            email: '',
+            userid: '',
+            // profilepic: '',
+            companyname: '',
+            // totalemploye: '',
+            fullname: '',
+            description: '',
+            phone: '',
+            website: '',
+            twitter: '',
+            fb: '',
+            insta: '',
+            youtube: '',
+            role: '',
 
-            if (response.ok) {
-                alert("Account created successfully and now you can post your Job posted");
-                console.log(  email, companyname, fullname, description,phone, website,twitter,
-                    fb,insta, youtube,);
-                    navigate("/employer/create-account");
-            } else {
-                alert("Something went wrong...please check credentials");
-            }
+            // Reset other fields as needed
+          });
         } catch (error) {
-            console.error("Error during Account Creation:", error);
+          console.error('Error sending data to backend:', error);
         }
-    };
+      };
+
+
+    // const handleAccount = async (e) => {
+    //     e.preventDefault();
+
+    //     try {
+    //         const response = await axios.post("http://localhost:8080/addtoemployers", {
+    //             method: "POST",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //             },
+    //             body: JSON.stringify({
+    //                  email,
+    //                 // profilepic,
+    //                 companyname,
+    //                 // totalemploye,
+    //                 fullname,
+    //                 description,
+    //                 phone,
+    //                 website,
+    //                 twitter,
+    //                 fb,
+    //                 insta,
+    //                 youtube,
+    //                 role,
+    //             }),
+    //         });
+
+    //         if (response.ok) {
+    //             alert("Account created successfully and now you can post your Job posted");
+    //             console.log(  email, companyname, fullname, description,phone, website,twitter,
+    //                 fb,insta, youtube,);
+    //                 navigate("/employer/create-account");
+    //         } else {
+    //             alert("Something went wrong...please check credentials");
+    //         }
+    //     } catch (error) {
+    //         console.error("Error during Account Creation:", error);
+    //     }
+    // };
 
 return (
 <div className='flex flex-col w-full'>
@@ -141,7 +179,7 @@ return (
                   </p>      
               </div>
 
-
+                 
               <div className='flex flex-col gap-y-2'>
                   <p className='font-Roboto font-medium text-[24px] leading-[28.13px]'>
                       Your company name
@@ -149,8 +187,10 @@ return (
                   </p>
                   <input
                       className='outline-none w-full border-[1.3px] border-[#989898] rounded-2xl px-4 py-3'
-                      type="companyname"
-                      value={companyname} onChange={(e) => setCompanyname(e.target.value)}  
+                      type="text"
+                      name="companyname" // Set the name attribute to match the state key
+                      value={inputData.companyname}
+                      onChange={handleChange}
                     />
               </div>
 
@@ -173,8 +213,10 @@ return (
                   </p>
                   <input
                       className='outline-none w-full border-[1.3px] border-[#989898] rounded-2xl px-4 py-3'
-                      type="fullname"
-                      value={fullname} onChange={(e) => setFullname(e.target.value)}   />
+                      type="text" // Corrected type attribute
+                      name="fullname" // Make sure name attribute matches state key
+                      value={inputData.fullname} 
+                      onChange={handleChange}     />
               </div>
               <div className='flex flex-col gap-y-2'>
                   <p className='font-Roboto font-medium text-[24px] leading-[28.13px]'>
@@ -184,8 +226,10 @@ return (
                   <p className='font-Roboto font-normal text-[15px] leading-[17.58px] text-[#6C6C6C]'>For account management communication. Not visible to jobseekers.</p>
                   <input
                       className='outline-none w-full border-[1.3px] border-[#989898] rounded-2xl px-4 py-3'
-                      type="phone"
-                      value={phone} onChange={(e) => setPhone(e.target.value)} 
+                      type="tel" // Corrected type attribute for phone number
+                      name="phone" // Make sure name attribute matches state key
+                      value={inputData.phone} 
+                      onChange={handleChange}
                        />
               </div>
               <div className='flex flex-col gap-y-2'>
@@ -196,8 +240,10 @@ return (
                   <p className='font-Roboto font-normal text-[15px] leading-[17.58px] text-[#6C6C6C]'>For account management communication. Not visible to jobseekers.</p>
                   <input
                       className='outline-none w-full border-[1.3px] border-[#989898] rounded-2xl px-4 py-3'
-                      type="role"
-                      value={role} onChange={(e) => setRole(e.target.value)} 
+                      type="text" 
+                      name="role" 
+                      value={inputData.role} 
+                      onChange={handleChange}
                        />
               </div>
 
@@ -235,7 +281,7 @@ return (
                       </div>
                       <div className='w-full '>
                           <textarea name="description" id="description" className='w-full h-[240px] border-b-[1.3px] border-[#989898] resize-none '
-                            value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+                            value={inputData.description} onChange={handleChange}></textarea>
                       </div>
                   </div>
 
@@ -249,8 +295,9 @@ return (
 
                   <input
                       className='outline-none w-full border-[1.3px] border-[#989898] rounded-2xl px-4 py-3 font-Roboto font-normal text-[24px] leading-[28.13px] text-[#6C6C6C]'
-                      type="website"
-                      value={website} onChange={(e) => setWebsite(e.target.value)}
+                      type="text" 
+                      name="website"
+                      value={inputData.website} onChange={handleChange}
                       placeholder='http://' />
               </div>
 
@@ -262,9 +309,12 @@ return (
 
                   <input
                       className='outline-none w-full border-[1.3px] border-[#989898] rounded-2xl px-4 py-3 font-Roboto font-normal text-[24px] leading-[28.13px] text-[#6C6C6C]'
-                      type="twitter"
-                      value={twitter} onChange={(e) => setTwitter(e.target.value)}
-                      placeholder='@yourcompany' />
+                      type="text" 
+                      name="twitter" 
+                      value={inputData.twitter} 
+                      onChange={handleChange}
+                      placeholder='@yourcompany' 
+                   />
               </div>
 
               <div className='flex flex-col gap-y-2'>
@@ -275,9 +325,11 @@ return (
 
                   <input
                       className='outline-none w-full border-[1.3px] border-[#989898] rounded-2xl px-4 py-3 font-Roboto font-normal text-[24px] leading-[28.13px] text-[#6C6C6C]'
-                      type="fb"
-                      value={fb} onChange={(e) => setFb(e.target.value)}
-                      placeholder='@yourcompany' />
+                      type="text"
+                      name="fb" 
+                      value={inputData.fb} 
+                      onChange={handleChange}
+                      placeholder='@yourcompany'/>
               </div>
 
               <div className='flex flex-col gap-y-2'>
@@ -288,9 +340,11 @@ return (
 
                   <input
                       className='outline-none w-full border-[1.3px] border-[#989898] rounded-2xl px-4 py-3 font-Roboto font-normal text-[24px] leading-[28.13px] text-[#6C6C6C]'
-                      type="insta"
-                      value={insta} onChange={(e) => setInsta(e.target.value)}
-                      placeholder='@yourcompany' />
+                      type="text" 
+                      name="insta" 
+                      value={inputData.insta} 
+                      onChange={handleChange}
+                      placeholder='@yourcompany'  />
               </div>
 
               <div className='flex flex-col gap-y-2'>
@@ -301,14 +355,16 @@ return (
 
                   <input
                       className='outline-none w-full border-[1.3px] border-[#989898] rounded-2xl px-4 py-3 font-Roboto font-normal text-[24px] leading-[28.13px] text-[#6C6C6C]'
-                      type="youtube"
-                      value={youtube} onChange={(e) => setYoutube(e.target.value)}
+                      type="text" 
+                      name="youtube" 
+                      value={inputData.youtube} 
+                      onChange={handleChange}
                       placeholder='URL' />
               </div>
 
               <div className='flex justify-end w-full pt-20'>
-                  <Link to='/components/job-post'>
-                      <button onClick={handleAccount} className='px-[68px] py-[22px] w-fit rounded-lg bg-darkBlue flex items-center gap-x-2'>
+                  <Link to='/job-post'>
+                      <button onClick={handleSubmit} className='px-[68px] py-[22px] w-fit rounded-lg bg-darkBlue flex items-center gap-x-2'>
                           <p className='uppercase font-Roboto font-black text-[20px] leading-[23.44px] text-[#ffffff]'>CONTINUE</p>
                       </button>
                   </Link>
