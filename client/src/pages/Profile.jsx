@@ -9,27 +9,49 @@ import { Link } from 'react-router-dom'
 const Profile = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const fileInputRef = useRef(null);
+  const userid = localStorage.getItem("jobportaluserId");
+  const [profiledata, setprofiledata] = useState([]);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
     // You can perform any additional actions upon file selection here
   };
- 
+ const email ="jskwj"
    const openFilePicker = () => {
     fileInputRef.current.click();
   };
 
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8080/users",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setprofiledata(data)
+      } else {
+        alert("Something went wrong please login again");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
+  }
 
-  const [username, setUsername]  = useState(''); 
-  const [email, setEmail] = useState('');
+  useEffect(() => {
+    
+    fetchData();
+  }, []);
 
-  useEffect(() =>
-   { const storeUsername = localStorage.getItem("username");
-   setUsername(storeUsername);
-   const storeEmail = localStorage.getItem("email");
-   setEmail(storeEmail);
-  },[]);
+ 
   
+
+
   return (
     <div className='flex flex-col w-full '>
       <Navbar />
@@ -40,24 +62,26 @@ const Profile = () => {
           className='absolute left-[172px] top-[50%]'
         />
       </div>
+      {
+          profiledata.filter((e)=>(e._id===userid)).map(profiledata =>(
       <div className='w-[704px] mx-auto pb-[100px]'>
-        <p className='font-Roboto font-extrabold text-[36px] leading-[42.19px] text-[#343434] pb-[100px]'>{username}</p>
-
+        <p className='font-Roboto font-extrabold text-[36px] leading-[42.19px] text-[#343434] pb-[100px]'>{profiledata.username}</p>
+      
         <div className='flex flex-col gap-y-2 pb-[100px]'>
           <div className='flex gap-x-2 items-center'>
             <img src={MailBlue} alt="mail" />
-            <p className='font-Roboto font-normal text-[13px] leading-[15.23px] text-[#262626]'>{email}</p>
+            <p className='font-Roboto font-normal text-[13px] leading-[15.23px] text-[#262626]'>{profiledata.email}</p>
           </div>
 
           <div className='flex gap-x-2 items-center'>
             <img src={PhoneBlue} alt="phone" />
-            <p className='font-Roboto font-normal text-[13px] leading-[15.23px] text-[#262626]'>91+12340 098767</p>
+            <p className='font-Roboto font-normal text-[13px] leading-[15.23px] text-[#262626]'>{profiledata.phone}</p>
           </div>
 
           <div className='flex gap-x-2 justify-between items-center'>
             <div className='flex gap-x-2 items-center'>
               <img src={LocationBlue} alt="location" />
-              <p className='font-Roboto font-normal text-[13px] leading-[15.23px] text-[#262626]'>{email}</p>
+              <p className='font-Roboto font-normal text-[13px] leading-[15.23px] text-[#262626]'>{profiledata.saddress}</p>
             </div>
 
 
@@ -99,6 +123,7 @@ const Profile = () => {
           By continuing, you agree to receive job opportunities from Our Job Portal.
         </p>
       </div>
+          ))}
     </div>
   )
 }

@@ -11,7 +11,6 @@ import Redo from '../assets/redo.png'
 import { Link,  } from 'react-router-dom'
 import ArrowRightWhite from '../assets/arrow-right-white.png'
 import { useNavigate } from "react-router-dom"; 
-import axios from 'axios';
 
 const NewJob = () => {
     const [email, setEmail] = useState("");
@@ -20,35 +19,32 @@ const NewJob = () => {
     const [jobtags, setJobtags] = useState("");
     const [description, setDescription] = useState("");
     const [applicationemail, setApplicationemail] = useState("");
-    const [salary, setSalary] = useState("");
+    const [salary, setSalary] = useState(0);
     const navigate = useNavigate();
 
   const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log({ email, jobtitle, location, jobtags, applicationemail, salary, description })
     try {
-         const response = await axios.post("http://localhost:8080/addtojobs", {
-                email,
-                jobtitle,
-                location,
-                jobtags,
-                applicationemail,
-                salary,
-                description
-            }, {
-                method: "POST",
-          headers: {
-             "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ email, jobtitle,location,jobtags,applicationemail,salary,description}),
-        });
+        const response = await fetch( 
+          "http://localhost:8080/addtojobs", 
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({email, jobtitle,location,jobtags,applicationemail,salary,description}), 
+          }                                            
+                                                          
+        );
   
-        if (response.ok) {
+        if (response.ok) { 
+          const data = await response.json();
+          localStorage.setItem("newjobid", data._id);
           alert("Job Post successfully and now you can PREVIEW");
-          navigate("/");
-        }else {
+          navigate("/job-post/page-2");
+        } else { 
             console.error("Server returned error:", response.data);
-          alert("something went wrong...please check credential");
+            alert("something went wrong...please check credential");
         }
       } catch (error) {
         console.error("Error during PostJob:", error);
@@ -163,7 +159,7 @@ return (
                     <input
                         className='w-full border-[1.3px] border-[#989898] py-4 pl-5 font-Roboto font-normal rounded-2xl text-[24px] text-[#6C6C6C] leading-[28.13px] outline-none '
                         placeholder='eg : ₹20,000/-'
-                        type="salary"
+                        type="Number"
                         name="salary"
                         onChange={(e) => setSalary(e.target.value)}
                         value={salary}
