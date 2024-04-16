@@ -6,7 +6,7 @@ import ArrowRightWhite from '../assets/arrow-right-white.png'
 import { Link } from 'react-router-dom'
 
 
-const PostJobPage2 = () => {
+const PostJobPage2 = ({ location }) => {
     const [job, setjob] = useState([]);
     const jobid = localStorage.getItem("newjobid");
     const fetchData = async () => {
@@ -37,10 +37,11 @@ const PostJobPage2 = () => {
         fetchData();
       }, []);
      
-
+     
+      
+    
     return (
         <div className='flex flex-col w-full'>
-
             <div className='flex justify-between items-center h-[409px] w-full bg-[#F8EDFF] px-[200px]'>
                 <p className='font-Roboto font-bold text-[58px] leading-[67.97px] text-[#3D3B40]'>Post Review</p>
                 <img src={PostJob} alt="" />
@@ -50,10 +51,9 @@ const PostJobPage2 = () => {
             <div className='flex justify-center mx-auto pt-[100px] pb-[300px] flex-col'>
                 <JobCard
                     companyLogo={Logo}
-                   companyName={"jobtitle"}
-                    firm={"KARP Ltd"}
-                    salary = {job.
-                        salary}
+                   companyName={job.jobtitle}
+                    firm={job.companyname}
+                    salary = {job.salary}
                     location= {job.location}
                     posted= {"10days "}
                 />
@@ -74,6 +74,8 @@ const PostJobPage2 = () => {
 
         </div>
     )
+  
 }
+
 
 export default PostJobPage2

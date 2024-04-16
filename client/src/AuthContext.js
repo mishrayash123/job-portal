@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const authToken = localStorage.getItem("jobportaltoken");
-    const id = localStorage.getItem("jobportaluserId");
+   // const Userid = localStorage.getItem("jobportaluserId");
 
   useEffect(() => {
     
