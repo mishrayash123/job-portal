@@ -9,48 +9,102 @@ import { Link } from 'react-router-dom'
 
 export const AccountInfo = () => {
     const [username, setUsername]  = useState(''); 
-    const [email, setEmail] = useState('');
-  
+    const userid = localStorage.getItem("jobportaluserId");
+    const [profiledata, setprofiledata]  = useState([]); 
     useEffect(() =>
      { const storeUsername = localStorage.getItem("username");
      setUsername(storeUsername);
      const storeEmail = localStorage.getItem("email");
-     setEmail(storeEmail);
+     setemail(storeEmail);
     },[]);
  
-    const [currentEmail, setCurrentEmail] = useState('enter@example.com');
+    const [email, setemail] = useState('enter@example.com');
     const [isEditingEmail, setIsEditingEmail] = useState(false);
   
     const handleEditEmail = () => {
       setIsEditingEmail(true);
     };
   
-    const handleSaveEmail = () => {
-      setCurrentEmail(email);
+    const handleSaveEmail = async(id) => {
+      try {
+        const response = await fetch(`http://localhost:8080/updateemployer/${id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({email}),
+        });
+  
+        if (response.ok) {
+          alert("Updated");
+          fetchData()
+        }else {
+          alert("something went wrong...please check credential");
+        }
+      } catch (error) {
+        console.error("Error during registration:", error);
+      }
       setIsEditingEmail(false);
     };
   
-    const handleEmailChange = (e) => {
-      setEmail(e.target.value);
-    };
     
-      const [phoneNumber, setPhoneNumber] = useState('91+12340 098767');
-  const [currentPhoneNumber, setCurrentPhoneNumber] = useState('91+12340 098767');
+      const [phone, setphone] = useState('91+12340 098767');
   const [isEditingPhoneNumber, setIsEditingPhoneNumber] = useState(false);
 
   const handleEditPhoneNumber = () => {
     setIsEditingPhoneNumber(true);
   };
 
-  const handleSavePhoneNumber = () => {
-    setCurrentPhoneNumber(phoneNumber);
+  const handleSavePhoneNumber = async(id) => {
+    try {
+      const response = await fetch(`http://localhost:8080/updateemployer/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({phone}),
+      });
+
+      if (response.ok) {
+        alert("Updated");
+        fetchData()
+      }else {
+        alert("something went wrong...please check credential");
+      }
+    } catch (error) {
+      console.error("Error during registration:", error);
+    }
     setIsEditingPhoneNumber(false);
   };
 
-  const handlePhoneNumberChange = (e) => {
-    setPhoneNumber(e.target.value);
-  };
 
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8080/getemployers",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setprofiledata(data)
+      } else {
+        alert("Something went wrong please login again");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+    }
+  }
+
+  useEffect(() => {
+    
+    fetchData();
+  }, []);
    
 
     
@@ -86,6 +140,8 @@ export const AccountInfo = () => {
                     </div>
 
                 </div>
+                {
+          profiledata.filter((e)=>(e.userid===userid)).map(profiledata =>(
                 <div className='flex flex-col pt-10 pb-20'>
                     <div className='w-[1164px] mx-auto personalCard border-[1px] border-[#CACACA] flex flex-col justify-center items-center  px-5 py-4 rounded-[32px]'>
                         <div className='grid grid-cols-3  w-full px-5 py-5'>
@@ -99,18 +155,17 @@ export const AccountInfo = () => {
                                 <p className='font-Roboto font-normal text-[24px] leading-[28.13px]'>Role</p>
                                 <div className='border-[1px] border-[#C2C2C2]'></div>
                             </div>
-
+                           
                             <div className='flex flex-col justify-between gap-y-5'>
-                                <p className='font-light text-[24px] leading-[28.13px] '>{username}</p>
+                                <p className='font-light text-[24px] leading-[28.13px] '>{profiledata.fullname}</p>
                                 <div className='border-[1px] border-[#C2C2C2]'></div>
-                                <p  className=' font-thin text-[24px] leading-[28.13px]'>{currentEmail}</p>
+                                <p  className=' font-thin text-[24px] leading-[28.13px]'>{profiledata.email}</p>
                                 <div className='border-[1px] border-[#C2C2C2]'></div>
-                                <p  className=' font-thin text-[24px] leading-[28.13px]'>{currentPhoneNumber}</p>
+                                <p  className=' font-thin text-[24px] leading-[28.13px]'>{profiledata.phone}</p>
                                 <div className='border-[1px] border-[#C2C2C2]'></div>
-                                <p className=' font-light text-[24px] leading-[28.13px]'>Hiring Manager</p>
+                                <p className=' font-light text-[24px] leading-[28.13px]'>{profiledata.role}</p>
                                 <div className='border-[1px] border-[#C2C2C2]'></div>
                             </div>
-
                             <div className='flex flex-col justify-between gap-y-5'>
                                 <div className='flex justify-end'>
                                     <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -122,10 +177,12 @@ export const AccountInfo = () => {
                                 <div className="flex justify-end">
                                 {isEditingEmail ? (
                                      <div>
-                              <input  type="email" value={email} onChange={handleEmailChange}
+                              <input  type="email" value={email} onChange={(e) => setemail(e.target.value)} 
         placeholder="Enter new email"
       />
-      <button onClick={handleSaveEmail} className='px-[20px] py-[10px] w-fit rounded-lg border-[1px] border-darkBlue'>
+      <button onClick={(e)=>{
+        handleSaveEmail(profiledata._id);
+      }} className='px-[20px] py-[10px] w-fit rounded-lg border-[1px] border-darkBlue'>
         <p className='font-Roboto font-bold text-[15px] leading-[17.58px] text-darkBlue'>
           Save
         </p>
@@ -144,10 +201,12 @@ export const AccountInfo = () => {
                                 <div className="flex justify-end">
                                                {isEditingPhoneNumber ? (
                                      <div>
-                              <input  type="phonenumber" value={phoneNumber} onChange={handlePhoneNumberChange}
+                              <input  type="phonenumber" value={phone} onChange={(e) => setphone(e.target.value)} 
         placeholder="Enter new phoneNumber"
       />
-                                    <button onClick={handleSavePhoneNumber}  className='px-[20px] py-[10px] w-fit rounded-lg border-[1px] border-darkBlue'>
+                                    <button onClick={()=>{
+                                      handleSavePhoneNumber(profiledata._id)
+                                    }}  className='px-[20px] py-[10px] w-fit rounded-lg border-[1px] border-darkBlue'>
                                         <p className='font-Roboto font-bold text-[15px] leading-[17.58px] text-darkBlue'>
                                             Save
                                         </p>
@@ -180,7 +239,7 @@ export const AccountInfo = () => {
                     </div>
                 </div>
 
-
+))}
             </div>
 
             <Footer />

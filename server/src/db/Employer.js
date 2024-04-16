@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 // User Config
 const UserSchema = new mongoose.Schema({
   email: { type: String, required: true },
+  userid: { type: String },
   profilepic: { type: String },
   companyname: { type: String },
   totalemploye: { type: String },

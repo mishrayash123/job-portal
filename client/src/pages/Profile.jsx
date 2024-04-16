@@ -16,7 +16,6 @@ const Profile = () => {
     setSelectedFile(event.target.files[0]);
     // You can perform any additional actions upon file selection here
   };
- const email ="jskwj"
    const openFilePicker = () => {
     fileInputRef.current.click();
   };

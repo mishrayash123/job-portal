@@ -5,7 +5,7 @@ import {UserModel} from "../db/Employer.js"
 
 export const addtoEmployers = async (req, res) => {
   try {
-    const { email, userid, profilepic, companyname, totalemploye, fullname, description, phone, website, twitter, fb, insta, youtube, role, name } = req.body;
+    const { email, userid, profilepic, companyname, totalemploye, fullname, description, phone, website, twitter, fb, insta, youtube, role,} = req.body;
     if (!email || !userid) {
       return res.sendStatus(400);
     }
@@ -18,6 +18,7 @@ export const addtoEmployers = async (req, res) => {
 
     const user = await createEmployer({
       email,
+      userid,
       profilepic,
       companyname,
       totalemploye,
