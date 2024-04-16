@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 // User Config
 const UserSchema = new mongoose.Schema({
   email: { type: String, required: true },
-  jobtitle: { type: Number, required: true },
+  jobtitle: { type: String, required: true },
   location: { type: String, required: true },
   jobtags: { type: String, required: true },
   applicationemail: { type: String, required: true },
