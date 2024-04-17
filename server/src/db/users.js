@@ -8,6 +8,7 @@ const UserSchema = new mongoose.Schema({
   Type: { type: String },
   Conditions: { type: Boolean },
   fname: { type: String },
+  resume: { type: String },
   lname: { type: String },
   phone: { type: String },
   jobtitle: { type: String },

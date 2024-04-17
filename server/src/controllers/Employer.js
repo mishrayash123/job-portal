@@ -10,9 +10,9 @@ export const addtoEmployers = async (req, res) => {
       return res.sendStatus(400);
     }
 
-    const existingcart = await getEmployerByEmail(email);
+    const existingemployer = await getEmployerByEmail(email);
 
-    if (existingcart) {
+    if (existingemployer) {
       return res.sendStatus(400);
     }
 
