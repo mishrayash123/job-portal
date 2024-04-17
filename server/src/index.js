@@ -35,6 +35,5 @@ mongoose.Promise = Promise;
 mongoose.connect("mongodb+srv://Yash786:Yash786@cluster0.yxkhmqk.mongodb.net/").then(() => {
   console.log('connected successfully');
 }).catch(() => console.log('not connected'));
-// mongoose.connection.on('error', (error: Error) => console.log(error));
 
 app.use('/', router());
