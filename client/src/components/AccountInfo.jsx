@@ -8,12 +8,13 @@ import { Link } from 'react-router-dom'
 
 
 export const AccountInfo = () => {
-    const [username, setUsername]  = useState(''); 
+   // const [username, setUsername]  = useState(''); 
     const userid = localStorage.getItem("jobportaluserId");
     const [profiledata, setprofiledata]  = useState([]); 
     useEffect(() =>
-     { const storeUsername = localStorage.getItem("username");
-     setUsername(storeUsername);
+     { 
+    //   const storeUsername = localStorage.getItem("username");
+    //  setUsername(storeUsername);
      const storeEmail = localStorage.getItem("email");
      setemail(storeEmail);
     },[]);

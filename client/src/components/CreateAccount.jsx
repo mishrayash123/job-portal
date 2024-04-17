@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState} from 'react';
 import Navbar from './Navbar';
 import Team from '../assets/team.png';
 import './CreateAccount.css';
@@ -13,11 +13,11 @@ import Undo from '../assets/undo.png';
 import Redo from '../assets/redo.png';
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
-//import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 const CreateAccount = () => {
     const email = localStorage.getItem("email");
     const userid = localStorage.getItem("jobportaluserId");
-    const [profilepic, setprofilepic] = useState("xyz");
+  //  const [profilepic, setprofilepic] = useState("xyz");
     const [companyname, setcompanyname] = useState("");
     const [totalemploye, settotalemploye] = useState("");
     const [fullname, setfullname] = useState("");
@@ -29,6 +29,7 @@ const CreateAccount = () => {
     const [insta, setinsta] = useState("");
     const [youtube, setyoutube] = useState("");
     const [role, setrole] = useState("");
+    // const [employedata, setEmployedata] = useState([]);
 
     const handleSubmit = async(e) =>{
         e.preventDefault();
@@ -40,14 +41,17 @@ const CreateAccount = () => {
                 headers: {
                   "Content-Type": "application/json",
                 },
-                body: JSON.stringify({email,userid,profilepic,companyname,totalemploye,fullname,description,phone,website,twitter,fb,insta,youtube,role}), 
+                body: JSON.stringify({email,userid,companyname,totalemploye,fullname,description,phone,website,twitter,fb,insta,youtube,role}), 
               }                                            
                                                               
             );
       
             if (response.ok) { 
-              const data = await response.json();
+              //const data = await response.json();
               alert("successfully created");
+             
+           
+
             } else { 
                 console.error("Server returned error:", response.data);
                 alert("something went wrong...please check credential");
@@ -57,6 +61,7 @@ const CreateAccount = () => {
           }
     }
 
+   
 
 return (
 <div className='flex flex-col w-full'>
@@ -73,7 +78,6 @@ return (
       <p className='font-Roboto font-bold text-[36px] leading-[42.19px] text-[#3D3B40] w-[895px] text-center'>
           You haven't posted a job before, so you'll need to create an employer account.
       </p>
-
       <div className='w-[1118px] h-[2315px] rounded-[49px] border-[1px] border-[#CACACA] detailsCard'>
           <div className='w-[893px] mx-auto flex flex-col gap-y-14'>
               <div className='flex items-center justify-between py-9'>

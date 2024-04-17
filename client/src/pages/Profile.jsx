@@ -116,6 +116,14 @@ const Profile = () => {
           <p>Selected file: 
             {selectedFile.name}</p>
         )}
+              <p className='text-center font-bold'>or</p>
+              <Link to='/edit-profile'>
+         <button
+          className='w-full  py-[15px] border-[1px] border-[#BEBEBE] rounded-md text-[#0070D7] font-Roboto font-semibold text-[14px] leading-[16.41px]'
+          type="button"
+        > <p  >Create Your Resume</p>
+        </button>
+        </Link>
 
 
         <p className='font-Roboto font-normal text-[13px] leading-[15.23px] text-[#636363] pt-3'>
