@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import {useNavigate} from 'react-router-dom'
 
 const JobCard = (props) => {
-  const {companyLogo, companyName, firm, salary, location, posted,jobid} = props;
+  const {companyLogo, companyName, salary, location, posted,jobid} = props;
   const nav = useNavigate();
   return (
     <div className='flex flex-col w-[572px] max-h-[238px] border-[0.7px] card'>

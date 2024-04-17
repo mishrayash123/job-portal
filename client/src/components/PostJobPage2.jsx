@@ -52,7 +52,6 @@ const PostJobPage2 = ({ location }) => {
                 <JobCard
                     companyLogo={Logo}
                    companyName={job.jobtitle}
-                    firm={job.companyname}
                     salary = {job.salary}
                     location= {job.location}
                     posted= {job.createdAt.slice(0,10)}
