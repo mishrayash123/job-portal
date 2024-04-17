@@ -1,21 +1,24 @@
 import React from 'react'
 import './JobCard.css'
 import { Link } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom'
 
 const JobCard = (props) => {
-  const {companyLogo, companyName, firm, salary, location, posted} = props;
+  const {companyLogo, companyName, firm, salary, location, posted,jobid} = props;
+  const nav = useNavigate();
   return (
     <div className='flex flex-col w-[572px] max-h-[238px] border-[0.7px] card'>
       <div className='w-full max-h-[calc(238px-47px)] overflow-hidden flex items-center p-4'>
 
-        <div>
+        {/* <div>
           <img src={companyLogo}
             alt="company_logo" />
-        </div>
+        </div> */}
+
 
         <div className='flex flex-col gap-y-3 p-6 '>
           <p className='font-Roboto font-medium text-[16px] leading-[18.75px] text-[#414141]'>{companyName}</p>
-          <p className='font-Roboto font-normal text-[14px] leading-[16.41px] text-[#525CEB]'>{firm}</p>
+          {/* <p className='font-Roboto font-normal text-[14px] leading-[16.41px] text-[#525CEB]'>{firm}</p> */}
 
           <div className='flex gap-x-1 items-center ' >
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -56,9 +59,12 @@ const JobCard = (props) => {
           <Link to='/job-apply'>
             <p className='font-Roboto font-medium text-[13px] leading-[15.23px] text-[#FFFFFF] uppercase'>Freelance</p></Link>
           </button>
-          <button className='px-[26px] py-[10px] rounded-lg bg-[#2E216B]'>
-          <Link to='/job-apply'>
-          <p className='font-Roboto font-medium text-[13px] leading-[15.23px] text-[#FFFFFF] uppercase'>Apply</p></Link>
+          <button className='px-[26px] py-[10px] rounded-lg bg-[#2E216B]' onClick={
+              (e) => {
+                nav('/job-apply', { state: { id:jobid} });
+              }
+          }>
+          <p className='font-Roboto font-medium text-[13px] leading-[15.23px] text-[#FFFFFF] uppercase'>Apply</p>
           </button>
         </div>  
 

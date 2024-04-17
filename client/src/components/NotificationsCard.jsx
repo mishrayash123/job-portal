@@ -1,8 +1,10 @@
 import React from 'react'
+import {useNavigate} from 'react-router-dom'
 
 const NotificationsCard = (props) => {
 
-    const {time, position, location } = props;
+    const {time, position, location,jobid } = props;
+    const nav = useNavigate();
     return (
         <div className='w-[795px] h-[228px] rounded-md border-[0.5px] border-[#666666]  '>
             <div className='w-[716px] mx-auto flex flex-col gap-y-7 h-full  justify-center  '>
@@ -22,7 +24,11 @@ const NotificationsCard = (props) => {
                             in {location}
                         </p>
 
-                        <button className='px-[26px] py-[10px] w-fit rounded-lg bg-[#2E216B]'>
+                        <button className='px-[26px] py-[10px] w-fit rounded-lg bg-[#2E216B]' onClick={
+              (e) => {
+                nav('/job-apply', { state: { id:jobid} });
+              }
+          }>
                             <p className='font-Roboto font-normal text-[13px] leading-[15.23px] text-[#ffffff]'>View Job</p>
                         </button>
                     </div>

@@ -10,6 +10,8 @@ import { useAuth } from "../AuthContext";
 
 const Navbar = () => {
     const { isLoggedIn} = useAuth();
+    const [data,setdata] = useState([])
+    const userid = localStorage.getItem("jobportaluserId");
     const location = useLocation();
     const [activeNavLink, setActiveNavLink] = useState(null);
     const [showModal, setShowModal] = useState(false);
@@ -21,48 +23,32 @@ const Navbar = () => {
         setActiveNavLink(location.pathname);
     }, [location]);
 
-    //const history = useHistory();
-   /// const [userHasEmployeeAccount, setUserHasEmployeeAccount] = useState(false);
-
-    // const checkUserEmployeeAccount = async () => {
-    //     try {
-    //       const response = await axios.get(`http://localhost:8080/db//getemployers`);
-    //     //  const userData = response.data;
-    //       // Check if userData indicates the user has an Employee account
-    //       const hasEmployeeAccount = /* Your logic to determine if the user has an Employee account */
-    //     //  setUserHasEmployeeAccount(hasEmployeeAccount);
-    //      // return hasEmployeeAccount;
-    //     } catch (error) {
-    //       console.error('Error checking user Employee account:', error);
-    //       // Handle error appropriately, e.g., show an error message to the user
-    //     }
-    //   };
-
-       // Function to handle button click
-//   const handleButtonClick = async () => {
-//     const hasEmployeeAccount = await checkUserEmployeeAccount();
-//     if (!hasEmployeeAccount) {
-//       // Redirect to create account page if the user hasn't created an Employee account
-//       window.location.href = '/job-post';
-//     } else {
-//       // Redirect to job post page if the user has an Employee account
-//       window.location.href = '/createAccount';
-//     }
-//   };
+    const fetchData = async () => {
+        try {
+          const response = await fetch(
+            "http://localhost:8080/getemployers",
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          if (response.ok) {
+            const data = await response.json();
+                setdata(data)
+          } else {
+            alert("Something went wrong");
+          }
+        } catch (error) {
+          console.error("Error :", error);
+        }
+      }
     
+      useEffect(() => {
+        fetchData();
+      }, []);
 
-    // const handlePostJobClick = () => {
-    //     // If employee account exists, show success message and navigate to job post page
-    //     if (employeeAccountExists) {
-    //         alert('Employee account exists. Redirecting to job post page.');
-    //         // Navigate to job post page
-    //         window.location.href = '/job-post';
-    //     } else {
-    //         // If employee account doesn't exist, show error message and redirect to create account page
-    //         alert('Employee account does not exist. Redirecting to create account page.');
-    //         // Redirect to create account page
-    //         window.location.href = '/createAccount';
-    //     }
     return (
         <div className='bg-[#3D3B40] bg-opacity-80  h-[92px] w-full flex  justify-center items-center relative top-0 z-50'>
             <div className='flex items-center justify-between h-[47px] w-[1282px] relative opacity-100'>
@@ -116,11 +102,28 @@ const Navbar = () => {
                     }
                     {isLoggedIn ?
                         (<>
-                            <button className='h-[41px] w-fit rounded-md bg-darkBlue px-[28px] py-[10px] '>
-                                <Link to='/job-post' >
-                                    <p className='text-[#ffffff] leading-[21.09px] font-bold font-Roboto text-[18px]'>Post job</p>
+                        {
+                            data.filter((e)=>(e.userid===userid)).length===1 ?
+                            <>
+                            {
+                               data.filter((e)=>(e.userid===userid)).map(job =>(
+                            <button className='h-[41px] w-fit rounded-md bg-darkBlue px-[28px] py-[10px] ' 
+                            onClick={()=>{
+                                localStorage.setItem("employerId", job._id);
+                            }}
+                            >
+                            <Link to='/job-post' >
+                                <p className='text-[#ffffff] leading-[21.09px] font-bold font-Roboto text-[18px]' >Post job</p>
+                            </Link>
+                        </button>
+                                ))}
+                                </>
+                        :<button className='h-[41px] w-fit rounded-md bg-darkBlue px-[28px] py-[10px] '>
+                                <Link to='/employer/create-account' >
+                                    <p className='text-[#ffffff] leading-[21.09px] font-bold font-Roboto text-[18px]'>Create Employer Account</p>
                                 </Link>
                             </button>
+                        }
                         </>)
                         :
                         (

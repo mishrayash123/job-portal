@@ -1,21 +1,23 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom'
 
 const JobsOtdCards = (props) => {
-    const { companyLogo, companyName, firm, salary, location, posted, jobType } = props;
+    const { companyLogo, companyName, firm, salary, location, posted, jobType,jobid} = props;
+    const nav = useNavigate();
     return (
         <div className='flex flex-col w-[375px] max-h-[277px] border-[0.7px] card'>
             <div className='w-full max-h-[calc(277-32px)] overflow-hidden flex   items-center p-4'>
                 <div className='flex w-full'>
-                    <div className='flex w-full items-center justify-center'>
+                    {/* <div className='flex w-full items-center justify-center'>
                         <img src={companyLogo}
                             alt="company_logo" />
-                    </div>
+                    </div> */}
 
                     <div className='flex flex-col'>
                         <div className='flex flex-col gap-y-3 p-6 '>
                             <p className='font-Roboto font-medium text-[16px] leading-[18.75px] text-[#414141]'>{companyName}</p>
-                            <p className='font-Roboto font-normal text-[14px] leading-[16.41px] text-[#525CEB]'>{firm}</p>
+                            {/* <p className='font-Roboto font-normal text-[14px] leading-[16.41px] text-[#525CEB]'>{firm}</p> */}
                             <div className='flex gap-x-1 items-center ' >
                                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M6 5.25H12M3 1.5V16.5L4.5 15.75L6 16.5L7.5 15.75L9 16.5L10.5 15.75L12 16.5L13.5 15.75L15 16.5V1.5L13.5 2.25L12 1.5L10.5 2.25L9 1.5L7.5 2.25L6 1.5L4.5 2.25L3 1.5Z" stroke="#0F0A52" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
@@ -46,10 +48,12 @@ const JobsOtdCards = (props) => {
                     <p className='font-Roboto font-medium text-[13px] leading-[15.23px] text-[#FFFFFF] uppercase'>{jobType}</p>
                 </button>
 
-                <button className='px-[26px] py-[10px] rounded-lg bg-[#2E216B] w-fit'>
-                    <Link to='/job-apply'>
-                    <p className='font-Roboto font-medium text-[13px] leading-[15.23px] text-[#FFFFFF] uppercase'>Apply</p>
-                    </Link>
+                <button className='px-[26px] py-[10px] rounded-lg bg-[#2E216B] w-fit'  onClick={
+              (e) => {
+                nav('/job-apply', { state: { id:jobid} });
+              }
+          }>
+              <p className='font-Roboto font-medium text-[13px] leading-[15.23px] text-[#FFFFFF] uppercase'>Apply</p>
                 </button>
                 <div className='text-[#2E216B] w-[25px] h-[25px]  like bg-[#ffffff] flex items-center justify-center rounded-md'>
                     <svg width="13.33px" height="12.23px" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">

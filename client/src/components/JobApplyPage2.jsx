@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Freelance from '../assets/freelance.png';
 import ArrowLeft from '../assets/arrow-left.png';
 import Upload from '../assets/upload.png';
 import './JobApplyPage2.css';
 import { Link } from 'react-router-dom';
 import ArrowDown from '../assets/down_arrow.png';
+
+import { useLocation } from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 
 const JobApplyPage2 = () => {
     const [isCollapsed, setIsCollapsed] = useState(true);
@@ -20,12 +23,45 @@ const JobApplyPage2 = () => {
         }
     };
 
+    const nav = useNavigate();
+    const [data,setdata] = useState([])
+    const location = useLocation();
+
+    const fetchData = async () => {
+        try {
+          const response = await fetch(
+            "http://localhost:8080/getjobs",
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          if (response.ok) {
+            const data = await response.json();
+                setdata(data)
+          } else {
+            alert("Something went wrong");
+          }
+        } catch (error) {
+          console.error("Error :", error);
+        }
+      }
+    
+      useEffect(() => {
+        fetchData();
+      }, []);
+
     return (
+        <>
+        {
+            data.filter((e) => (e._id == location.state.id)).map(job => (
         <div className='flex flex-col w-full '>
             <div className='w-full h-[258px] bg-[#525CEB] px-[50px] my-auto'>
                 <div className='w-[1085px] h-[163px] bg-[#ffffff] bg-opacity-20 flex flex-col justify-center pl-6 mt-8'>
                     <div className='flex flex-col gap-y-3'>
-                        <p className='font-Roboto font-black text-[58px] leading-[67.97px] text-[#ffffff]'>Senior Health and Food</p>
+                        <p className='font-Roboto font-black text-[58px] leading-[67.97px] text-[#ffffff]'>{job.jobtitle}</p>
                         <div className='flex gap-x-3 px-[18px] py-[6px] w-fit bg-[#FFFFFF] rounded-lg'>
                             <img src={Freelance} alt="freelance" />
                             <p className='font-Roboto font-extrabold text-[17px] leading-[19.92px] text-[#6F78EA]'>Freelance</p>
@@ -61,35 +97,35 @@ const JobApplyPage2 = () => {
                             </label>
                             <input type="file" id="cvUpload" style={{ display: "none" }} onChange={handleFileUpload} />
                         </div>
-
-                        <Link className='py-8 w-full' to='/job-apply/page-3'>
-                            <button className='px-[264px] py-[22px] rounded-lg bg-darkBlue w-full'>
+                            <button className='px-[264px] py-[22px] rounded-lg bg-darkBlue w-full mt-3' onClick={
+                                    (e) => {
+                                      nav('/job-apply/page-3', { state: { id:job._id} });
+                                    }
+                                }>
                                 <p className='font-Roboto font-bold text-[15px] leading-[17.58px] text-[#ffffff] uppercase'>
                                     Continue
                                 </p>
                             </button>
-                        </Link>
                     </div>
                 </div>
                 <div className='w-[40%] bg-[#F3F4F6] flex flex-col justify-center items-center  py-20'>
                     <div className={`relative flex flex-col mx-auto bg-[#ffffff] rounded-2xl w-[491px] ${isCollapsed ? 'h-[347px]' : 'h-[477px]'} my-auto gap-y-2 px-5 py-6 overflow-hidden`}>
                         <div className='flex flex-col'>
                             <div className='flex flex-col gap-y-2 border-b-[1.3px] border-b-[#DFDFDF]  py-5'>
-                                <p className='font-Roboto font-medium text-[20px] leading-[23.44px] text-[#414141]'>Senior Health and Food</p>
+                                <p className='font-Roboto font-medium text-[20px] leading-[23.44px] text-[#414141]'>{job.jobtitle}</p>
                                 <p className='font-Roboto font-normal text-[13px] leading-[15.23px] text-[#666666]'>
-                                    Grand Central Pkwy Hollis NY 11003 India
+                                {job.location}
                                 </p>
                             </div>
 
                             <div className='py-5 gap-y-4 flex flex-col'>
                                 <p className='font-SofiaSans font-bold text-[20px] leading-6'>Description</p>
                                 <p className='font-LeagueSpartan font-normal text-[13px] leading-[14.56px] text-[#6C6C6C]'>
-                                    We are seeking a highly experienced and dedicated Senior Health and Food Specialist to join our team.
-                                    The Senior Health and Food Specialist will be responsible for overseeing health and nutrition programs, developing and implementing strategies to promote healthy eating habits, and ensuring compliance with relevant health and food safety regulations.
+                                {job.description}
                                 </p>
                             </div>
 
-                            <div className='py-5 gap-y-4 flex flex-col'>
+                            {/* <div className='py-5 gap-y-4 flex flex-col'>
                                 <p className='font-SofiaSans font-bold text-[20px] leading-6'>Responsibilities</p>
                                 <ul className='list-disc pl-2'>
                                     <li className='font-LeagueSpartan font-normal text-[13px] leading-[14.56px] text-[#6C6C6C] py-2'>
@@ -99,7 +135,7 @@ const JobApplyPage2 = () => {
                                         Provide training and education to staff and community members on topics related to nutrition, food safety, and healthy eating.
                                     </li>
                                 </ul>
-                            </div>
+                            </div> */}
                         </div>
 
                         <div className="absolute bottom-0 left-0 w-full bg-[#ffffff]">
@@ -114,6 +150,8 @@ const JobApplyPage2 = () => {
                 </div>
             </div>
         </div>
+            ))}
+        </>
     );
 }
 

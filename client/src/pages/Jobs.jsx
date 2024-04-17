@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import Navbar from '../components/Navbar'
 
 import BrowseJobs from '../components/BrowseJobs'
@@ -8,6 +8,37 @@ import JobsOtdCards from '../components/JobsOtdCards'
 import Footer from '../components/Footer'
 
 const Jobs = () => {
+    const [job, setjob] = useState([]);
+    const fetchData = async () => {
+        try {
+          const response = await fetch(
+            "http://localhost:8080/getjobs",
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          if (response.ok) {
+            const data = await response.json();
+            console.log(data)
+            setjob(data)
+          } else {
+            alert("Something went wrong please login again");
+          }
+        } catch (error) {
+          console.error("Error during login:", error);
+        }
+      }
+    
+      useEffect(() => {
+        fetchData();
+      }, []);
+
+
+
+    
     return (
         <div className='flex flex-col '>
             <Navbar />
@@ -98,17 +129,23 @@ const Jobs = () => {
                     </div>
 
                     <div className='grid grid-cols-2 gap-x-[60px] gap-y-[40px]'>
-                        {
-                            jobOftheDayData.map((job) => (
+                    {
+          job.map(job =>(
                                 <JobsOtdCards
-                                    key={job.id}
-                                    companyLogo={job.companyLogo}
-                                    companyName={job.companyName}
+                                    key={job._id}
+                                    jobid={job._id}
+                                    // companyLogo={job.companyLogo}
+                                    companyName={job.jobtitle
+                                    }
                                     firm={job.firm}
-                                    salary={job.salary}
-                                    location={job.location}
-                                    posted={job.posted}
-                                    jobType= {job.jobType}
+                                    salary={job.salary
+                                        }
+                                    location={job.location
+                                    }
+                                    posted={job.createdAt.slice(0,10)
+                                    }
+                                    jobType= {job.jobtags
+                                    }
                                 />
                             ))
                         }

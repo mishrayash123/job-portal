@@ -4,10 +4,9 @@ import {createAppliedjobs,getAppliedjobs,deleteAppliedjobsById} from '../db/Joba
 
 export const addtoAppliedjobs = async (req, res) => {
     try {
-      const {userid,employerid,jobid,cv,coverletter,} = req.body;
-
+      const {userid,employerid,jobid,cv,coverletter,username,position} = req.body;
       const user  = await createAppliedjobs({
-        userid,employerid,jobid,cv,coverletter
+        userid,employerid,jobid,cv,coverletter,username,position
       });
       return res.status(200).json(user).end();
     } catch (error) {

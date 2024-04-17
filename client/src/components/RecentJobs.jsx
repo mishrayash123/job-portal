@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState ,useEffect} from 'react'
 import JobCard from './JobCard';
 // import JobCardWithShadow from './JobCardWithShadow';
 import { cardData } from '../data/card';
@@ -9,6 +9,35 @@ const RecentJobs = () => {
     const handleTabClick = (index) => {
         setActiveTab(index);
     };
+
+    const [job, setjob] = useState([]);
+    const fetchData = async () => {
+        try {
+          const response = await fetch(
+            "http://localhost:8080/getjobs",
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          if (response.ok) {
+            const data = await response.json();
+            console.log(data)
+            setjob(data)
+          } else {
+            alert("Something went wrong please login again");
+          }
+        } catch (error) {
+          console.error("Error during login:", error);
+        }
+      }
+    
+      useEffect(() => {
+        fetchData();
+      }, []);
+
     return (
         <div className='w-[1164px] flex flex-col mx-auto pt-12  pb-32'>
             <div className='flex justify-between w-full py-20 '>
@@ -55,16 +84,25 @@ const RecentJobs = () => {
             </div>
 
             <div className='grid xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-x-3 gap-y-[64px] '>
-                {
-                    cardData.map(job => (
+            {
+          job.sort(function (x, y) {
+            return Date.parse(y.createdAt) - Date.parse(x.createdAt);
+          }).map(job =>(
                         <JobCard
-                        key={job.id}
-                        companyLogo= {job.companyLogo}
-                        companyName= {job.companyName}
-                        firm= {job.firm}
-                        salary= {job.salary}
-                        location= {job.location}
-                        posted= {job.posted}
+                        key={job._id}
+                                    // companyLogo={job.companyLogo}
+                                    jobid={job._id}
+                                    companyName={job.jobtitle
+                                    }
+                                    firm={job.firm}
+                                    salary={job.salary
+                                        }
+                                    location={job.location
+                                    }
+                                    posted={job.createdAt.slice(0,10)
+                                    }
+                                    jobType= {job.jobtags
+                                    }
                         />
                     ))
                 }

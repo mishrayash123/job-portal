@@ -49,13 +49,13 @@ const PostJobPage2 = () => {
           job.filter((e)=>(e._id===jobid)).map(job =>(
             <div className='flex justify-center mx-auto pt-[100px] pb-[300px] flex-col'>
                 <JobCard
-                    companyLogo={Logo}
-                   companyName={"jobtitle"}
+                   companyName={job.jobtitle
+                   }
                     firm={"KARP Ltd"}
                     salary = {job.
                         salary}
                     location= {job.location}
-                    posted= {"10days "}
+                    posted= {job.createdAt.slice(0,10)}
                 />
 
 

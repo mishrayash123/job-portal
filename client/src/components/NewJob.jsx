@@ -13,6 +13,8 @@ import ArrowRightWhite from '../assets/arrow-right-white.png'
 import { useNavigate } from "react-router-dom"; 
 
 const NewJob = () => {
+    const  employerId = localStorage.getItem("employerId");
+    const userid = localStorage.getItem("jobportaluserId");
     const [email, setEmail] = useState("");
     const [jobtitle, setJobtitle] = useState("");
     const [location, setLocation] = useState("");
@@ -21,7 +23,6 @@ const NewJob = () => {
     const [applicationemail, setApplicationemail] = useState("");
     const [salary, setSalary] = useState(0);
     const navigate = useNavigate();
-
   const handleSubmit = async(e) => {
     e.preventDefault();
     try {
@@ -32,7 +33,7 @@ const NewJob = () => {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({email, jobtitle,location,jobtags,applicationemail,salary,description}), 
+            body: JSON.stringify({email,userid,employerId,jobtitle,location,jobtags,applicationemail,salary,description}), 
           }                                            
                                                           
         );

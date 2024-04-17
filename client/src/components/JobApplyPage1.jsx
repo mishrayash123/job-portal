@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState ,useEffect} from 'react';
 import BusinessMan from '../assets/businessman.png';
 import Freelance from '../assets/freelance.png'
 import CompanyLocation from '../assets/company_location.png'
@@ -10,9 +10,43 @@ import './JobApplyPage1.css'
 import Logo from '../assets/logo_2.svg'
 import { jobApplyData } from '../data/jobApply'
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 
 const JobApplyPage1 = () => {
+    const nav = useNavigate();
+    const [data,setdata] = useState([])
+    const location = useLocation();
+
+    const fetchData = async () => {
+        try {
+          const response = await fetch(
+            "http://localhost:8080/getjobs",
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          if (response.ok) {
+            const data = await response.json();
+                setdata(data)
+          } else {
+            alert("Something went wrong");
+          }
+        } catch (error) {
+          console.error("Error :", error);
+        }
+      }
+    
+      useEffect(() => {
+        fetchData();
+      }, []);
     return (
+        <>
+        {
+            data.filter((e) => (e._id == location.state.id)).map(job => (
         <div className='flex flex-col w-full h-full justify-center items-center'>
             <div className='flex flex-col w-full h-full bg-darkBlue relative items-center'>
                 <img src={BusinessMan} alt="employee" className='inset-0 object-cover w-full h-full ' />
@@ -20,7 +54,7 @@ const JobApplyPage1 = () => {
                 <div className='absolute inset-0 flex z-10 flex-col w-full h-full justify-center items-center'>
                     <div className='w-[1085px] h-[163px] bg-[#ffffff] bg-opacity-20 flex flex-col justify-center pl-6 mt-8'>
                         <div className='flex flex-col gap-y-3'>
-                            <p className='font-Roboto font-black text-[58px] leading-[67.97px] text-[#ffffff]'>Senior Health and Food</p>
+                            <p className='font-Roboto font-black text-[58px] leading-[67.97px] text-[#ffffff]'>{job.jobtitle}</p>
                             <div className='flex gap-x-3 px-[18px] py-[6px] w-fit bg-[#FFFFFF] rounded-lg'>
                                 <img src={Freelance} alt="freelance" />
                                 <p className='font-Roboto font-extrabold text-[17px] leading-[19.92px] text-[#6F78EA]'>Freelance</p>
@@ -38,13 +72,11 @@ const JobApplyPage1 = () => {
                         '>
                             <p className='font-SofiaSans font-bold text-[32px] leading-[38.4px] text-[#000000]'>Description</p>
                             <p className='font-medium font-LeagueSpartan text-[16px] leading-[17.92px] text-[#6C6C6C]'>
-                                We are seeking a highly experienced and dedicated Senior Health and Food Specialist to join our team.
-                                The Senior Health and Food Specialist will be responsible for overseeing health and nutrition programs, developing and implementing strategies to promote healthy eating habits, and ensuring compliance with relevant health and food safety regulations.
-                                The ideal candidate will possess strong leadership skills, extensive knowledge of nutrition and public health, and a passion for improving community health outcomes through education and advocacy.
+                               {job.description}
                             </p>
                         </div>
 
-                        <div className='flex flex-col gap-y-6 px-6 py-6'>
+                        {/* <div className='flex flex-col gap-y-6 px-6 py-6'>
                             <p className='font-SofiaSans font-bold text-[32px] leading-[38.4px] text-[#000000]'>Responsibilities</p>
                             <div className='flex flex-col '>
                                 <ul className='list-disc px-5'>
@@ -62,9 +94,9 @@ const JobApplyPage1 = () => {
                                     </li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> */}
 
-                        <div className='flex flex-col gap-y-6 px-6 py-6'>
+                        {/* <div className='flex flex-col gap-y-6 px-6 py-6'>
                             <p className='font-SofiaSans font-bold text-[32px] leading-[38.4px] text-[#000000]'>Minimum Qualifications</p>
                             <ul className='list-disc px-5'>
                                 <li className='font-LeagueSpartan font-medium text-[16px] leading-[17.92px] text-[#6C6C6C]'>
@@ -80,10 +112,11 @@ const JobApplyPage1 = () => {
                                     Proven ability to develop and implement health promotion programs and policies.
                                 </li>
                             </ul>
-                        </div>
+                        </div> */}
 
                         <div className='flex flex-col gap-y-6 px-6 py-6'>
                             <p className='font-SofiaSans font-bold text-[32px] leading-[38.4px] text-[#000000]'>Location</p>
+                            <p className='font-SofiaSans font-bold text-[24px] leading-[38.4px] text-[#000000]'>{job.location}</p>
                             <img src={CompanyLocation} alt="companyLocation" className='w-[610px] h-[486px] mx-auto' />
                         </div>
 
@@ -104,16 +137,16 @@ const JobApplyPage1 = () => {
                             </div>
 
                             <p className='font-Roboto font-bold text-[16px] leading-[18.75px] text-[#414141]'>Tagged as:</p>
-                            <p className='font-Roboto text-[#686868] text-[16px] leading-[18.75px] font-medium'>Media, Medical, Restaurants</p>
+                            <p className='font-Roboto text-[#686868] text-[16px] leading-[18.75px] font-medium'>{job.jobtags}</p>
                         </div>
 
                     </div>
 
                     <div className='w-[384px] h-[919px] flex flex-col border-[1.3px] border-[#DFDFDF] jobByTypes'>
                         <div className='flex flex-col justify-center items-center py-3 gap-y-2'>
-                            <img src={Logo} alt="companyLogo" className='w-[78px] h-[80px]' />
-                            <p className='font-Roboto font-medium text-[20px] leading-[23.44px]'>Senior Health and Food</p>
-                            <p className='text-[#525CEB] font-Roboto font-normal text-[14px] leading-[16.41px]'>GS Inc.</p>
+                            {/* <img src={Logo} alt="companyLogo" className='w-[78px] h-[80px]' /> */}
+                            <p className='font-Roboto font-medium text-[20px] leading-[23.44px]'>{job.jobtitle}</p>
+                            {/* <p className='text-[#525CEB] font-Roboto font-normal text-[14px] leading-[16.41px]'>GS Inc.</p> */}
                             <div className='flex gap-x-2'>
                                 <div className='text-[#2E216B] w-[25px] h-[25px]  like bg-[#ffffff] flex items-center justify-center rounded-md'>
                                     <svg width="13.33px" height="12.23px" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -129,27 +162,42 @@ const JobApplyPage1 = () => {
                         <div className='w-full border-[1.3px] border-[#DFDFDF] mt-6'></div>
 
                         <div className='flex flex-col px-4 py-9'>
-                            {jobApplyData.map((item, index) => (
-                                <div key={index} className='flex gap-x-4 px-4 py-5'>
-                                    <div>
-                                        <img src={item.icon} alt={item.label} />
-                                    </div>
+                                <div  className='flex gap-x-4 px-4 py-5'>
                                     <div className='flex flex-col gap-y-2'>
-                                        <p className='font-Roboto font-medium text-[16px] leading-[18.75px]'>{item.label}</p>
-                                        <p className='font-Roboto font-normal text-[13px] leading-[15.23px] text-[#666666]'>{item.value}</p>
+                                        <p className='font-Roboto font-medium text-[16px] leading-[18.75px]'>Posted</p>
+                                        <p className='font-Roboto font-normal text-[13px] leading-[15.23px] text-[#666666]'>{job.createdAt.slice(0,10)}</p>
                                     </div>
                                 </div>
-                            ))}
-
+                                <div  className='flex gap-x-4 px-4 py-5'>
+                                    <div className='flex flex-col gap-y-2'>
+                                        <p className='font-Roboto font-medium text-[16px] leading-[18.75px]'>Title</p>
+                                        <p className='font-Roboto font-normal text-[13px] leading-[15.23px] text-[#666666]'>{job.jobtitle}</p>
+                                    </div>
+                                </div>
+                                <div  className='flex gap-x-4 px-4 py-5'>
+                                    <div className='flex flex-col gap-y-2'>
+                                        <p className='font-Roboto font-medium text-[16px] leading-[18.75px]'>Location</p>
+                                        <p className='font-Roboto font-normal text-[13px] leading-[15.23px] text-[#666666]'>{job.location}</p>
+                                    </div>
+                                </div>
+                                <div  className='flex gap-x-4 px-4 py-5'>
+                                    <div className='flex flex-col gap-y-2'>
+                                        <p className='font-Roboto font-medium text-[16px] leading-[18.75px]'>Salary</p>
+                                        <p className='font-Roboto font-normal text-[13px] leading-[15.23px] text-[#666666]'>{job.salary}</p>
+                                    </div>
+                                </div>
                         </div>
 
                         <div className='py-8 mx-auto'>
                             <button className='px-[41px] py-[14px] rounded-lg bg-darkBlue w-fit mx-auto'>
-                                <p className='font-Roboto font-bold text-[15px] leading-[17.58px] text-[#ffffff] uppercase'>
-                                    <Link to='/job-apply/page-2'>
+                                <p className='font-Roboto font-bold text-[15px] leading-[17.58px] text-[#ffffff] uppercase cursor-pointer' 
+                                 onClick={
+                                    (e) => {
+                                      nav('/job-apply/page-2', { state: { id:job._id} });
+                                    }
+                                }
+                                >
                                         APPLY NOW !
-                                    </Link>
-
                                 </p>
                             </button>
                         </div>
@@ -159,6 +207,8 @@ const JobApplyPage1 = () => {
                 </div>
             </div>
         </div>
+            ))}
+        </>
     );
 }
 
