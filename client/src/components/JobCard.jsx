@@ -4,8 +4,38 @@ import { Link } from 'react-router-dom';
 import {useNavigate} from 'react-router-dom'
 
 const JobCard = (props) => {
-  const {companyLogo, companyName, salary, location, posted,jobid} = props;
+  const {companyLogo, companyName, salary,jobType, location, posted,jobid} = props;
   const nav = useNavigate();
+  const userid = localStorage.getItem("jobportaluserId");
+
+
+
+  const handleSubmit = async() => {
+    try {
+        const response = await fetch( 
+          "http://localhost:8080/addtosave", 
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({companyName,salary,location,posted,jobid,userid,jobType}), 
+          }                                            
+                                                          
+        );
+  
+        if (response.ok) { 
+          const data = await response.json();
+          alert("saved")
+        } else { 
+          alert("Already saved");
+        }
+      } catch (error) {
+        console.error("Error during PostJob:", error);
+      }
+    };
+
+
   return (
     <div className='flex flex-col w-[572px] max-h-[238px] border-[0.7px] card'>
       <div className='w-full max-h-[calc(238px-47px)] overflow-hidden flex items-center p-4'>
@@ -47,7 +77,11 @@ const JobCard = (props) => {
         </div>
 
         <div className='flex h-full mx-auto mt-[90px]'>
-          <div className='text-[#2E216B] w-[25px] h-[25px]  like bg-[#ffffff] flex items-center justify-center rounded-md'>
+          <div className='text-[#2E216B] w-[25px] h-[25px]  like bg-[#ffffff] flex items-center justify-center rounded-md cursor-pointer'
+          onClick={()=>{
+            handleSubmit()
+        }}
+          >
             <svg width="13.33px" height="12.23px" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M6.73333 10.3667L6.66667 10.4333L6.59333 10.3667C3.42667 7.49333 1.33333 5.59333 1.33333 3.66667C1.33333 2.33333 2.33333 1.33333 3.66667 1.33333C4.69333 1.33333 5.69333 2 6.04667 2.90667H7.28667C7.64 2 8.64 1.33333 9.66667 1.33333C11 1.33333 12 2.33333 12 3.66667C12 5.59333 9.90667 7.49333 6.73333 10.3667ZM9.66667 0C8.50667 0 7.39333 0.54 6.66667 1.38667C5.94 0.54 4.82667 0 3.66667 0C1.61333 0 0 1.60667 0 3.66667C0 6.18 2.26667 8.24 5.7 11.3533L6.66667 12.2333L7.63333 11.3533C11.0667 8.24 13.3333 6.18 13.3333 3.66667C13.3333 1.60667 11.72 0 9.66667 0Z" fill="#2E216B" />
             </svg>
@@ -77,7 +111,7 @@ const JobCard = (props) => {
         </div>
 
         <p className='font-Roboto font-bold text-[16px] leading-[18.75px] text-[#414141]'>Tagged as:</p>
-        <p className='font-Roboto text-[#686868] text-[16px] leading-[18.75px] font-medium'>Media, Medical, Restaurants</p>
+        <p className='font-Roboto text-[#686868] text-[16px] leading-[18.75px] font-medium'>{jobType}</p>
       </div>
     </div>
   )

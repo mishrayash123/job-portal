@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema({
   pin: { type: String },
   des: { type: String },
   skillcontent: { type: String },
-  skills: { type: String },
+  skills: { type:Object },
   edu: { type: String },
   experience: { type: String },
   password: { type: String, required: true, select: false },

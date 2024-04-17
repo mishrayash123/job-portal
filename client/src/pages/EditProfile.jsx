@@ -30,6 +30,10 @@ const EditProfile = () => {
   const [city, setcity] = useState('');
   const [state, setstate] = useState('');
   const [pin, setPincode] = useState('');
+  const [experience, setexperience] = useState('');
+  const [edu, setedu] = useState('');
+  const [skillcontent, setskillcontent] = useState('');
+  const [des, setdes] = useState('');
 
   const handleFormSubmit = async (e) => {
     const id = localStorage.getItem("jobportaluserId");
@@ -69,6 +73,29 @@ const EditProfile = () => {
     newSkills.splice(index, 1);
     setSkills(newSkills);
   };
+
+  const handleFormSubmit1 = async (e) => {
+    const id = localStorage.getItem("jobportaluserId");
+    e.preventDefault();
+    try {
+        const response = await fetch(`http://localhost:8080/updateusers/${id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({des,edu,experience,skills,skillcontent}),
+        });
+  
+        if (response.ok) {
+          alert("Updated");
+          navigate("/profile");
+        }else {
+          alert("something went wrong...please check credential");
+        }
+      } catch (error) {
+        console.error("Error during registration:", error);
+      }
+  }
 
 
 
@@ -270,7 +297,10 @@ const EditProfile = () => {
         </div>
         <div className='w-full py-6'>
          <textarea name="aboutYourself" id="aboutYourself" 
-         className='w-full h-[200px] p-2 border rounded-md border-[#777777] resize-none'></textarea>
+         className='w-full h-[200px] p-2 border rounded-md border-[#777777] resize-none'
+         value={des}
+         onChange={(e) => setdes(e.target.value)}
+         ></textarea>
         </div>
        
        
@@ -309,7 +339,10 @@ const EditProfile = () => {
                         </div>
                         <div className='w-full py-6'>
                             <textarea name="description" id="description" 
-                        className='w-full h-[200px] border-b-[1.3px] border-[#989898] resize-none'></textarea>
+                        className='w-full h-[200px] border-b-[1.3px] border-[#989898] resize-none'
+                        value={skillcontent}
+                        onChange={(e) => setskillcontent(e.target.value)}
+                        ></textarea>
                         </div>
                     </div>
 
@@ -358,6 +391,8 @@ const EditProfile = () => {
     </div>
      <textarea  className='rounded-xl bg-[#f0eef1]'
         placeholder="Enter a Education..."
+        value={edu}
+        onChange={(e) => setedu(e.target.value)}
       />
     <button id="addEducationButton" class="shadow-md pt-4 w-[300px] h-[60px] rounded-xl bg-[#faf3ff]  text-center font-bold relative">
         <div class='absolute'>
@@ -376,6 +411,8 @@ const EditProfile = () => {
     </div>
      <textarea  className='rounded-xl bg-[#f0eef1]'
         placeholder="Enter a Experience..."
+        value={experience}
+        onChange={(e) => setexperience(e.target.value)}
       />
     <button id="addexperienceButton" class="shadow-md pt-4 w-[300px] h-[60px] rounded-xl bg-[#faf3ff]  text-center font-bold relative">
         <div class='absolute'>
@@ -390,11 +427,11 @@ const EditProfile = () => {
 
     </div>
     <div className='flex justify-end w-full pt-20'>
-                    <Link to='/profile'>
-                        <button  className='px-[68px] py-[22px] w-fit rounded-lg bg-darkBlue flex items-center gap-x-2'>
+                    
+                        <button  className='px-[68px] py-[22px] w-fit rounded-lg bg-darkBlue flex items-center gap-x-2' onClick={ (e) =>(handleFormSubmit1(e))}>
                             <p className='uppercase font-Roboto font-black text-[20px] leading-[23.44px] text-[#ffffff]'>SAVE</p>
                         </button>
-                    </Link>
+                  
 
                 </div>
 </div>

@@ -22,7 +22,6 @@ const Jobs = () => {
           );
           if (response.ok) {
             const data = await response.json();
-            console.log(data)
             setjob(data)
           } else {
             alert("Something went wrong please login again");
