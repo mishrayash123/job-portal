@@ -12,12 +12,14 @@ import AttachedLink from '../assets/attached_link.png';
 import Undo from '../assets/undo.png';
 import Redo from '../assets/redo.png';
 import { Link } from 'react-router-dom';
+import {storage} from "./firebase.config";
+import {ref, uploadBytes, getDownloadURL} from "firebase/storage"
 import Footer from './Footer';
 // import { useNavigate } from 'react-router-dom';
 const CreateAccount = () => {
     const email = localStorage.getItem("email");
     const userid = localStorage.getItem("jobportaluserId");
-  //  const [profilepic, setprofilepic] = useState("xyz");
+   const [profilepic, setprofilepic] = useState("xyz");
     const [companyname, setcompanyname] = useState("");
     const [totalemploye, settotalemploye] = useState("");
     const [fullname, setfullname] = useState("");
@@ -31,6 +33,22 @@ const CreateAccount = () => {
     const [role, setrole] = useState("");
     // const [employedata, setEmployedata] = useState([]);
 
+    const handleuploadimage = async(e) =>{
+        const imageRef = ref(storage, userid);
+        if (e) {
+            uploadBytes(imageRef, e).then(() => {
+                getDownloadURL(imageRef).then((url) => {
+                    setprofilepic(url);
+                    alert("Image Uploaded")
+                }).catch((error) => {
+                    console.log(error.message, "error geting the image url");
+                })
+            }).catch((error) => {
+                console.log(error.message);
+            })
+        }
+      }
+
     const handleSubmit = async(e) =>{
         e.preventDefault();
         try {
@@ -41,17 +59,14 @@ const CreateAccount = () => {
                 headers: {
                   "Content-Type": "application/json",
                 },
-                body: JSON.stringify({email,userid,companyname,totalemploye,fullname,description,phone,website,twitter,fb,insta,youtube,role}), 
+                body: JSON.stringify({email,userid,companyname,profilepic,totalemploye,fullname,description,phone,website,twitter,fb,insta,youtube,role}), 
               }                                            
                                                               
             );
       
             if (response.ok) { 
-              //const data = await response.json();
+              const data = await response.json();
               alert("successfully created");
-             
-           
-
             } else { 
                 console.error("Server returned error:", response.data);
                 alert("something went wrong...please check credential");
@@ -88,15 +103,18 @@ return (
                           <p className='font-Roboto font-medium text-[20px] leading-[23.44px] text-[#9e9e9e]'>PNG, JPG up to 5MB</p>
                       </div>
                   </div>
-                  <input  type="file"style={{ display: 'none' }}
+                  <input  type="file"
                  accept="image/jpeg, image/png, image/gif,image/jpg." // Add acceptable file types here
+                 onChange={(e)=>{
+                    handleuploadimage(e.target.files[0])
+                  }}
                  />
-        <button
+        {/* <button
           className='font-LeagueSpartan font-semibold text-[20px] leading-[22.4px] text-darkBlue'
           type="button"
         >
           <p >Upload</p>
-        </button>
+        </button> */}
        
 
               </div>

@@ -6,16 +6,30 @@ import MailBlue from '../assets/mail-blue.png'
 import PhoneBlue from '../assets/phone_blue.png'
 import LocationBlue from '../assets/location_blue.png'
 import { Link } from 'react-router-dom'
+import {storage} from "../components/firebase.config";
+import {ref, uploadBytes, getDownloadURL} from "firebase/storage"
 const Profile = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [resume, setresume] = useState("");
   const fileInputRef = useRef(null);
   const userid = localStorage.getItem("jobportaluserId");
   const [profiledata, setprofiledata] = useState([]);
 
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
-    // You can perform any additional actions upon file selection here
-  };
+  const handleuploadimage = async(e) =>{
+    const imageRef = ref(storage, userid+"resume");
+    if (e) {
+        uploadBytes(imageRef, e).then(() => {
+            getDownloadURL(imageRef).then((url) => {
+                setresume(url);
+                handleFormSubmit()
+            }).catch((error) => {
+                console.log(error.message, "error geting the image url");
+            })
+        }).catch((error) => {
+            console.log(error.message);
+        })
+    }
+  }
+
    const openFilePicker = () => {
     fileInputRef.current.click();
   };
@@ -47,7 +61,26 @@ const Profile = () => {
     fetchData();
   }, []);
 
- 
+  const handleFormSubmit = async () => {
+    const id = localStorage.getItem("jobportaluserId");
+    try {
+        const response = await fetch(`http://localhost:8080/updateusers/${id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({resume}),
+        });
+  
+        if (response.ok) {
+          alert("Resume Updated");
+        }else {
+          alert("something went wrong...please check credential");
+        }
+      } catch (error) {
+        console.error("Error during registration:", error);
+      }
+  }
   
 
 
@@ -102,8 +135,10 @@ const Profile = () => {
           ref={fileInputRef}
           type="file"
           style={{ display: 'none' }}
-          onChange={handleFileChange}
           accept=".pdf,.doc,.docx" // Add acceptable file types here
+          onChange={(e)=>{
+            handleuploadimage(e.target.files[0])
+          }}
         />
         <button
           className='w-full  py-[15px] border-[1px] border-[#BEBEBE] rounded-md text-[#0070D7] font-Roboto font-semibold text-[14px] leading-[16.41px]'
@@ -112,10 +147,10 @@ const Profile = () => {
         >
           <p >Upload Resume</p>
         </button>
-        {selectedFile && (
+        {/* {selectedFile && (
           <p>Selected file: 
             {selectedFile.name}</p>
-        )}
+        )} */}
               <p className='text-center font-bold'>or</p>
               <Link to='/edit-profile'>
          <button

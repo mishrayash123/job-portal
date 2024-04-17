@@ -5,23 +5,57 @@ import Upload from '../assets/upload.png';
 import './JobApplyPage2.css';
 import { Link } from 'react-router-dom';
 import ArrowDown from '../assets/down_arrow.png';
-
+import {storage} from "./firebase.config";
+import {ref, uploadBytes, getDownloadURL} from "firebase/storage"
 import { useLocation } from 'react-router-dom'
 import {useNavigate} from 'react-router-dom'
 
 const JobApplyPage2 = () => {
     const [isCollapsed, setIsCollapsed] = useState(true);
+    const userid = localStorage.getItem("jobportaluserId");
+    const [resume, setresume] = useState("");
+
+    const handleuploadimage = async(e) =>{
+        const imageRef = ref(storage, userid+"resume");
+        if (e) {
+            uploadBytes(imageRef, e).then(() => {
+                getDownloadURL(imageRef).then((url) => {
+                    setresume(url);
+                    handleFormSubmit()
+                }).catch((error) => {
+                    console.log(error.message, "error geting the image url");
+                })
+            }).catch((error) => {
+                console.log(error.message);
+            })
+        }
+      }
 
     const toggleCollapse = () => {
         setIsCollapsed(!isCollapsed);
     };
 
-    const handleFileUpload = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            alert("CV uploaded successfully!");
-        }
-    };
+    const handleFormSubmit = async () => {
+        const id = localStorage.getItem("jobportaluserId");
+        try {
+            const response = await fetch(`http://localhost:8080/updateusers/${id}`, {
+              method: "PATCH",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({resume}),
+            });
+      
+            if (response.ok) {
+              alert("Resume Updated");
+            }else {
+              alert("something went wrong...please check credential");
+            }
+          } catch (error) {
+            console.error("Error during registration:", error);
+          }
+      }
+
 
     const nav = useNavigate();
     const [data,setdata] = useState([])
@@ -95,7 +129,9 @@ const JobApplyPage2 = () => {
                                     </p>
                                 </div>
                             </label>
-                            <input type="file" id="cvUpload" style={{ display: "none" }} onChange={handleFileUpload} />
+                            <input type="file" id="cvUpload" style={{ display: "none" }} onChange={(e)=>{
+            handleuploadimage(e.target.files[0])
+          }} />
                         </div>
                             <button className='px-[264px] py-[22px] rounded-lg bg-darkBlue w-full mt-3' onClick={
                                     (e) => {
